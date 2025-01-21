@@ -3,7 +3,7 @@
 local whi = require 'lib/whi'
 
 -- CONFIGURATION SECTION
-local REFRESH_TIME = 60
+local REFRESH_TIME = 300
 
 -- END CONFIGURATION SECTION
 ----------------------------------
@@ -21,8 +21,10 @@ end
 function DisplayLatestInfo()
     local item_freq = whi.ItemCountMap()
     local tempTbl = {}
-    local whpercent_used = whi.InventoryUsedPercentage()
+    local wh_used, wh_total = whi.InventoryUsedPercentage()
     for _, x in pairs(item_freq) do table.insert(tempTbl, x) end
+
+    print(wh_used, wh_total)
 
     table.sort(tempTbl, function(a, b) return  a.count > b.count end)
 
@@ -32,9 +34,9 @@ function DisplayLatestInfo()
     local line = 1
     monitor.setTextScale(1)
     monitor.setCursorPos(1, line)
-    monitor.setTextColor(8)
-    monitor.write("TOP INVENTORY:", tostring(whpercent_used))
-    -- RightJustify(tostring(whpercent_used), '% full', line)
+    monitor.setTextColor(5)
+    monitor.write("TOP INVENTORY - " .. tostring(wh_used) .. '/' .. tostring(wh_total))
+    -- RightJustify(tostring(whperce..t_us ed, '% fu..l', line)
     -- monitor.write(tostring(whpercent_used), '% full')
 
 
