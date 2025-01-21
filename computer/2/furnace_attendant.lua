@@ -1,4 +1,6 @@
 local whi = require 'lib/whi'
+local net = require 'lib/network'
+
 
 
 local minraw_before_smelt = 256
@@ -11,7 +13,7 @@ local generator_coalbox = 'sophisticatedstorage:chest_5'
 local coalfuel = 'minecraft:coal'
 local raw_items = {
     -- 'minecraft:cobblestone',
-    'minecraft:clay_ball',
+    -- 'minecraft:clay_ball',
     -- 'minecraft:echo_shard',
     -- 'create:crushed_raw_gold',
     -- 'create:crushed_raw_copper',
@@ -27,21 +29,10 @@ local raw_items = {
     -- 'scguns:raw_anthralite',
 }
 
-function GetFurnaces()
-    local furnaces_list = {}
-    local attached_peripherals = peripheral.getNames()
-    for _, ap in pairs(attached_peripherals) do
-        if string.find(ap, furnaces) then
-            furnaces_list[#furnaces_list + 1] = ap
-        end
-    end
-    return furnaces_list
-end
-
 function AttendFurnaces()
     for _, raw_item in pairs(raw_items) do
         local moved = 0
-        for _, furnace in pairs(GetFurnaces()) do
+        for _, furnace in pairs(net.ListMatchingDevices(furnaces)) do
             -- Refuel furnaces
             -- print(whi.GetFromAnyWarehouse(false, coalfuel, furnace, 64, 2), 'fueled (coal)')
             print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')

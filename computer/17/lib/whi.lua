@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.4' }
+local warehouse_interface = { _version = '0.0.5' }
 
 local warehouses = {'functionalstorage:storage_controller', 'sophisticatedstorage:chest'} -- "pneumaticcraft:reinforced_chest"
 
@@ -7,6 +7,8 @@ function warehouse_interface.ItemCountMap()
 
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
+    table.sort(peripherals)
+
     local warehouses_list = {}
     for index, attached_peripheral in pairs(peripherals) do
         for _, vessel in pairs(warehouses) do
@@ -39,6 +41,8 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     -- print(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
+    table.sort(peripherals)
+
     local warehouses_list = {}
 
     for index, attached_peripheral in pairs(peripherals) do
@@ -59,6 +63,8 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     if not itemCount then itemCount = 64 end
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
+    table.sort(peripherals)
+
     local warehouses_list = {}
 
     for index, attached_peripheral in pairs(peripherals) do
