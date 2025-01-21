@@ -57,7 +57,7 @@ end
 
 print('Starting colony stats board...')
 while true do
-    Main()
-    -- pcall(Main)
+    -- Main()
+    pcall(Main)
     sleep(REFRESH_TIME)
 end

@@ -12,8 +12,6 @@ function network.ListMatchingDevices(devStr)
     return devices
 end
 
-
-
 function network.ListMultipleMatchingDevices(devTable)
     local peripherals = peripheral.getNames()
     local devices = {}

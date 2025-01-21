@@ -1,6 +1,25 @@
-local warehouse_interface = { _version = '0.0.6' }
+local warehouse_interface = { _version = '0.0.7' }
 
-local warehouses = {'functionalstorage:storage_controller'} -- "pneumaticcraft:reinforced_chest"
+local net = require "lib/network"
+
+local warehouses_list = {'functionalstorage:storage_controller', 'sophisticatedstorage:chest'} -- "pneumaticcraft:reinforced_chest"
+
+function warehouse_interface.InventoryUsedPercentage()
+    local total_slots = 0
+    local total_used_slots = 0
+    local warehouses = net.ListMultipleMatchingDevices(warehouses_list)
+    for _, wh in pairs(warehouses) do
+        w = peripheral.wrap(wh)
+        total_slots = total_slots + w.size()
+        
+        for _, elem in pairs(w.list()) do
+            if elem ~= nil then
+                total_used_slots = total_used_slots + 1
+            end
+        end
+    end
+    return total_used_slots, total_slots
+end
 
 function warehouse_interface.ItemCountMap()
     local itemCountMap = {}
@@ -9,25 +28,21 @@ function warehouse_interface.ItemCountMap()
     local peripherals = peripheral.getNames()
     table.sort(peripherals)
 
-    local warehouses_list = {}
-    for index, attached_peripheral in pairs(peripherals) do
-        for _, vessel in pairs(warehouses) do
-            if string.find(attached_peripheral, vessel) then
-                warehouses_list[#warehouses_list + 1] = attached_peripheral
-            end
-        end
-    end
+    local warehouses = {}
+    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
-    for _, warehouse in pairs(warehouses_list) do
+    for _, warehouse in pairs(warehouses) do
         local whp = peripheral.wrap(warehouse)
         for _, item in pairs(whp.list()) do
             if itemCountMap[item.name] then
                 itemCountMap[item.name] = {
+                    name = item.name,
                     count = itemCountMap[item.name].count + item.count,
                     slots = itemCountMap[item.name].slots + 1
                 }
             else
                 itemCountMap[item.name] = {
+                    name = item.name,
                     count = 0 + item.count,
                     slots = 1
                 }
@@ -41,19 +56,10 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     -- print(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
-    table.sort(peripherals)
+    local warehouses = {}
+    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
-    local warehouses_list = {}
-
-    for index, attached_peripheral in pairs(peripherals) do
-        for _, vessel in pairs(warehouses) do
-            if string.find(attached_peripheral, vessel) then
-                warehouses_list[#warehouses_list + 1] = attached_peripheral
-            end
-        end
-    end
-
-    for whi, warehouse in pairs(warehouses_list) do
+    for whi, warehouse in pairs(warehouses) do
         movedItemCount = movedItemCount + peripheral.wrap(warehouse).pullItems(sourceStorage, sourceSlot)
     end
     return movedItemCount
@@ -64,20 +70,11 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     table.sort(peripherals)
-
-    local warehouses_list = {}
-
-    for index, attached_peripheral in pairs(peripherals) do
-        for _, vessel in pairs(warehouses) do
-            if string.find(attached_peripheral, vessel) then
-                warehouses_list[#warehouses_list + 1] = attached_peripheral
-            end
-        end
-    end
+    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
     -- SEARCH EACH WAREHOUSE FOR ITEM
     local foundCount = 0
-    for whi, warehouse in pairs(warehouses_list) do
+    for whi, warehouse in pairs(warehouses) do
         local whp = peripheral.wrap(warehouse)
         for slot, item in pairs(whp.list()) do
             -- must be exact name match

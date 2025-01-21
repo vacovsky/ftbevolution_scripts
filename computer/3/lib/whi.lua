@@ -18,9 +18,6 @@ function warehouse_interface.InventoryUsedPercentage()
             end
         end
     end
-    
-    -- print(total_slots, total_used_slots)
-    -- return (total_used_slots / total_slots) * 100
     return total_used_slots, total_slots
 end
 

@@ -38,7 +38,7 @@ end
 
 print('Starting warehouse vacuum...')
 while true do
-    Vacuum()
-    -- if not pcall(Vacuum) then print('Vacuum() failed to complete') end
+    -- Vacuum()
+    if not pcall(Vacuum) then print('Vacuum() failed to complete') end
     sleep(60)
 end
