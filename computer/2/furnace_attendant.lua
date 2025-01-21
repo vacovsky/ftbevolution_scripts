@@ -9,7 +9,7 @@ local max_result_allowed = 512
 local furnaces = 'furnace'
 -- local furnaces = 'minecraft:furnace'
 local waxfuel = 'productivebees:wax'
-local generator_coalbox = 'sophisticatedstorage:chest_5'
+local generator_coalbox = 'sophisticatedstorage:barrel_2'
 local coalfuel = 'minecraft:coal'
 local raw_items = {
     -- 'minecraft:cobblestone',
