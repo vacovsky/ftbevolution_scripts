@@ -8,7 +8,6 @@ function warehouse_interface.ItemCountMap()
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
-    
     for index, attached_peripheral in pairs(peripherals) do
         for _, vessel in pairs(warehouses) do
             if string.find(attached_peripheral, vessel) then
@@ -37,7 +36,7 @@ function warehouse_interface.ItemCountMap()
 end
 
 function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
-    print(sourceStorage, sourceSlot)
+    -- print(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
@@ -51,7 +50,6 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     end
 
     for whi, warehouse in pairs(warehouses_list) do
-        print(warehouse)
         movedItemCount = movedItemCount + peripheral.wrap(warehouse).pullItems(sourceStorage, sourceSlot)
     end
     return movedItemCount

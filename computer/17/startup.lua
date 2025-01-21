@@ -1,24 +1,34 @@
 
 local whi = require 'lib/whi'
-local var = require 'lib/constants'
+local vars = require 'lib/constants'
 
 local buffer = 'minecraft:barrel_0'
 
 print("drawer stackables warehouse audit")
 
 
-while true do
+function Reshuffle()
     moved = 0
     items = whi.ItemCountMap()
 
     for item, _ in pairs(items) do
         moved = moved + whi.GetFromAnyWarehouse(true, item, buffer)
-    end
+        sleep(.2)
 
-    for slot, item in pairs(peripheral.wrap(buffer).list()) do
-        whi.DepositInAnyWarehouse(buffer, slot)
-        sleep(.5)
+        for slot, item in pairs(peripheral.wrap(buffer).list()) do
+            whi.DepositInAnyWarehouse(buffer, slot)
+            sleep(.2)
+        end
+        print(moved, "moved")
     end
-    print("- moved", moved, "items")
     sleep(30)
+end
+
+local LOOPS = 0
+while true do
+    -- if redstone.getInput('top') then
+    pcall(Reshuffle)
+    -- Main()
+    if LOOPS >= vars.REBOOT_AFTER_LOOPS then os.reboot() end
+    LOOPS = LOOPS + 1
 end
