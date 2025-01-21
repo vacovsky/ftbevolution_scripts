@@ -59,19 +59,10 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     -- print(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
-    table.sort(peripherals)
+    local warehouses = {}
+    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
-    local warehouses_list = {}
-
-    for index, attached_peripheral in pairs(peripherals) do
-        for _, vessel in pairs(warehouses) do
-            if string.find(attached_peripheral, vessel) then
-                warehouses_list[#warehouses_list + 1] = attached_peripheral
-            end
-        end
-    end
-
-    for whi, warehouse in pairs(warehouses_list) do
+    for whi, warehouse in pairs(warehouses) do
         movedItemCount = movedItemCount + peripheral.wrap(warehouse).pullItems(sourceStorage, sourceSlot)
     end
     return movedItemCount

@@ -21,5 +21,6 @@
   "peripheral.enderstorage:ender_tank": 1,
   "peripheral.productivebees:gene_indexer": 3,
   "peripheral.sophisticatedstorage:barrel": 2,
-  "peripheral.turtle": 0
+  "peripheral.turtle": 0,
+  "peripheral.monitor": 0
 }
