@@ -8,9 +8,11 @@ function warehouse_interface.ItemCountMap()
     -- COLLECT WAREHOUSE NAMES
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
-    for _, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, warehouses) then
-            warehouses_list[#warehouses_list + 1] = attached_peripheral
+    for index, attached_peripheral in pairs(peripherals) do
+        for _, vessel in pairs(warehouses) do
+            if string.find(attached_peripheral, vessel) then
+                warehouses_list[#warehouses_list + 1] = attached_peripheral
+            end
         end
     end
 
@@ -77,7 +79,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             if not guess then
                 if item.name == itemName then
                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    foundCount = foundCount + pushedCount
+                    if pushedCount ~= nil then
+                        foundCount = foundCount + pushedCount
+                    end                    
                     if foundCount >= itemCount then
                         print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
@@ -88,7 +92,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             else
                 if string.find(item.name, itemName) then
                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    foundCount = foundCount + pushedCount
+                    if pushedCount ~= nil then
+                        foundCount = foundCount + pushedCount
+                    end
                     if foundCount >= itemCount then
                         print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH

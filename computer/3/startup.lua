@@ -1,4 +1,9 @@
 
+
+local whi = require 'lib/whi'
+local var = require 'lib/constants'
+
+
 shell.openTab("warehouse_vacuum")
 shell.openTab("warehouse_returns")
 -- shell.openTab("warehouse_pruner")
@@ -8,7 +13,7 @@ shell.openTab("warehouse_returns")
 local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecraft:chest'
-local MAX_ITEM_COUNT = 64
+local MAX_ITEM_COUNT = 1024
 local DESTINATION_STORAGE = 'sophisticatedstorage:chest_6'
 local ITEM_NAME_MIN = 4
 
@@ -23,35 +28,9 @@ function DeliverItem(itemName, itemCount)
         itemCount = MAX_ITEM_COUNT
     end
     foundCount = 0
-
-    -- FIND WAREHOUSES
-    warehouses = {}
-    peripherals = peripheral.getNames()
-    for pni, perName in pairs(peripherals) do
-        if string.find(perName, WAREHOUSE) then
-            print('Checking location:', perName)
-            warehouses[#warehouses+1] = perName
-        end
-    end
-
-    -- MOVE THE ITEMS
-    LAST_SELECTION = deliveredItemName
-    deliveredItemName = ''
-    for whi, warehouseName in pairs(warehouses) do
-        warehouse = peripheral.wrap(warehouseName)
-        foundCount = 0
-        for slot, item in pairs(warehouse.list()) do
-            if string.find(item.name, itemName) then
-                deliveredItemName = item.name
-                foundCount = foundCount + warehouse.pushItems(DESTINATION_STORAGE, slot, itemCount)
-                -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                if foundCount >= itemCount then print('Order successfully filled!') break end
-                goto found
-            end
-        end
-        ::found::
-    end
-    print('delivered', foundCount, deliveredItemName)
+    foundCount = foundCount + whi.GetFromAnyWarehouse(true, itemName, DESTINATION_STORAGE, itemCount, slot)
+        if foundCount >= 0 then print('Order successfully filled!') end
+    print('delivered', foundCount, itemName)
 
     return true
 end

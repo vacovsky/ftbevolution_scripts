@@ -77,7 +77,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             if not guess then
                 if item.name == itemName then
                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    foundCount = foundCount + pushedCount
+                    if pushedCount ~= nil then
+                        foundCount = foundCount + pushedCount
+                    end                    
                     if foundCount >= itemCount then
                         print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
@@ -88,7 +90,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             else
                 if string.find(item.name, itemName) then
                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    foundCount = foundCount + pushedCount
+                    if pushedCount ~= nil then
+                        foundCount = foundCount + pushedCount
+                    end
                     if foundCount >= itemCount then
                         print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
