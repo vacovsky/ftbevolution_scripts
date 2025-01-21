@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.5' }
+local warehouse_interface = { _version = '0.0.6' }
 
 local warehouses = {'functionalstorage:storage_controller', 'sophisticatedstorage:chest'} -- "pneumaticcraft:reinforced_chest"
 
@@ -112,8 +112,8 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             -- end fuzzy
         end
         if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
-        ::found::
     end
+    ::found::
     return foundCount
 end
 

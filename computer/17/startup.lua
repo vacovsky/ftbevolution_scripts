@@ -1,5 +1,6 @@
 
 local whi = require 'lib/whi'
+local xxxwhi = require 'lib/xxx_whi'
 local vars = require 'lib/constants'
 
 local buffer = 'minecraft:barrel_0'
@@ -12,7 +13,7 @@ function Reshuffle()
     items = whi.ItemCountMap()
 
     for item, _ in pairs(items) do
-        moved = moved + whi.GetFromAnyWarehouse(true, item, buffer)
+        moved = moved + xxx_whi.GetFromAnyWarehouse(true, item, buffer)
         sleep(.2)
 
         for slot, item in pairs(peripheral.wrap(buffer).list()) do
