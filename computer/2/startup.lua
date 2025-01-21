@@ -1,4 +1,4 @@
-shell.openTab("hive_manager")
+-- shell.openTab("hive_manager")
 shell.openTab("furnace_attendant")
 shell.openTab("turtle_honey_power")
 

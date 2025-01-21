@@ -58,8 +58,8 @@ function AttendFurnaces()
 end
 
 function FuelGenerators()
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 64, 2), 'fueled (coal)')
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 64, 2), 'fueled (coal)')
+    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 64, 2), 'fueled (wax)')
+    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 64, 2), 'fueled (wax)')
     print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'fueled (coal)')
     print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'fueled (coal)')
 end
