@@ -19,7 +19,7 @@ function ListHives()
     return list
 end
 
-while true do
+function CollectFromHives()
     local combsMoved = 0
     for _, hive in pairs(ListHives()) do
         local phive = peripheral.wrap(hive)
@@ -33,8 +33,11 @@ while true do
             end
         end
     end
-
     if combsMoved > 0 then print('Tranferred', combsMoved, 'combs') end
+end
+
+while true do
+    pcall(CollectFromHives)
     sleep(5)
 
 end

@@ -4,7 +4,7 @@ local net = require "lib/network"
 
 local fluid_source = 'enderstorage:ender_tank_1'
 
-while true do
+function DepositFluids()
     local fluidPushed = 0
     local fluid_dests = net.ListMatchingDevices(vars.honey_storage)
 
@@ -13,6 +13,10 @@ while true do
     end
 
     print('xfer', fluidPushed, 'mb from ender tank')
+end
+
+while true do
+   pcall(DepositFluids)
     sleep(.5)
     fluidPushed = 0
 end

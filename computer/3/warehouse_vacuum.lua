@@ -7,7 +7,7 @@ local COLONY_NAME = 'Nolins'
 local source_inventories = {
     'sophisticatedstorage:chest_3',
     'sophisticatedstorage:chest_6',
-    'pneumaticcraft:reinforced_chest_5'
+    'enderstorage:ender_chest_2'
 }
 
 function WriteToFile(input, fileName, mode)
@@ -33,21 +33,11 @@ function Vacuum()
             end
         end
     end
-
-    local data = {
-        timeStamp = os.epoch("utc"),
-        turtlePower = {
-            name = COLONY_NAME,
-            vacuumedItems = deposited
-        }
-    }
-    WriteToFile(json.encode(data), "warehouseVacuum.json", "w")
     print(deposited, 'xfer')
 end
 
 print('Starting warehouse vacuum...')
 while true do
     if not pcall(Vacuum) then print('Vacuum() failed to complete') end
-    -- Vacuum()
-    sleep(600)
+    sleep(60)
 end

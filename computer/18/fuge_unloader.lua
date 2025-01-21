@@ -17,7 +17,7 @@ function ListCentrifuges()
     return fuge_list
 end
 
-while true do
+function UnloadFuges()
     local combsMoved = 0
     for _, fuge in pairs(ListCentrifuges()) do
         local pfuge = peripheral.wrap(fuge)
@@ -31,6 +31,10 @@ while true do
         end
         pfluiddest.pullFluid(fuge)
     end
+end
+
+while true do
+    pcall(UnloadFuges)
 
     print('Tranferred', combsMoved, 'combs')
     sleep(5)
