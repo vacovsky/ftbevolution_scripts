@@ -21,6 +21,7 @@ function Reshuffle()
             shuffled = whi.DepositInAnyWarehouse(buffer, slot)
             sleep(.1)
         end
+        
         if shuffled == 0 then
             print(item, "sent back")
             xxx_whi.DepositInAnyWarehouse(buffer, slot)
