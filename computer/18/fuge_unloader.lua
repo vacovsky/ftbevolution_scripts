@@ -1,7 +1,10 @@
 local json = require "lib/json"
 local vars = require "lib/constants"
 
-local combs_source = 'enderstorage:ender_chest_1'
+local combs_dest = 'enderstorage:ender_chest_3'
+local fluid_dest = 'enderstorage:ender_tank_0'
+
+
 
 function ListCentrifuges()
     local fuge_list = {}
@@ -18,12 +21,15 @@ while true do
     local combsMoved = 0
     for _, fuge in pairs(ListCentrifuges()) do
         local pfuge = peripheral.wrap(fuge)
-        local pcombsrc = peripheral.wrap(combs_source)
-        for slot, item in pairs(pcombsrc.list()) do
-            if string.find(item.name, 'productivebees:') then
-                pfuge.pullItems(combs_source, slot)
+        local pcombdest = peripheral.wrap(combs_dest)
+        local pfluiddest = peripheral.wrap(fluid_dest)
+
+        for slot, item in pairs(pfuge.list()) do
+            if not string.find(item.name, 'comb') then
+                pcombdest.pullItems(fuge, slot)
             end
         end
+        pfluiddest.pullFluid(fuge)
     end
 
     print('Tranferred', combsMoved, 'combs')

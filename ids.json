@@ -1,12 +1,12 @@
 {
   "peripheral.productivebees:advanced_hive": 52,
   "peripheral.minecraft:furnace": 13,
-  "peripheral.minecraft:chest": 73,
-  "computer": 17,
+  "peripheral.minecraft:chest": 75,
+  "computer": 18,
   "peripheral.sophisticatedstorage:chest": 6,
-  "peripheral.computer": 6,
+  "peripheral.computer": 8,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
-  "peripheral.productivebees:centrifuge": 65,
+  "peripheral.productivebees:centrifuge": 118,
   "peripheral.enderio:stirling_generator": 0,
   "peripheral.basicFluidTank": 5,
   "peripheral.pneumaticcraft:small_tank": 14,
@@ -16,5 +16,7 @@
   "peripheral.functionalstorage:framed_fluid_1": 4,
   "peripheral.functionalstorage:storage_controller": 0,
   "peripheral.functionalstorage:framed_1": 1,
-  "peripheral.minecraft:barrel": 0
+  "peripheral.minecraft:barrel": 0,
+  "peripheral.enderstorage:ender_chest": 4,
+  "peripheral.enderstorage:ender_tank": 1
 }

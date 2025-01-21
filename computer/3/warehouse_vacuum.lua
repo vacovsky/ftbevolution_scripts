@@ -6,6 +6,7 @@ local COLONY_NAME = 'Nolins'
 
 local source_inventories = {
     'sophisticatedstorage:chest_3',
+    'sophisticatedstorage:chest_6',
     'pneumaticcraft:reinforced_chest_5'
 }
 

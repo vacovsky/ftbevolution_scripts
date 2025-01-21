@@ -3,8 +3,8 @@ local vars = require "lib/constants"
 local whi = require "lib/whi"
 
 -- local combs_source = 'enderstorage:ender_chest_5'
--- local combs_dest = 'enderstorage:ender_chest_3'
-local combs_dest = 'sophisticatedstorage:chest_2'
+local combs_dest = 'enderstorage:ender_chest_1'
+-- local combs_dest = 'sophisticatedstorage:chest_2'
 -- local combs_dest = 'pneumaticcraft:reinforced_chest_1'
 
 function ListHives()
