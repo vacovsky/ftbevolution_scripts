@@ -14,7 +14,7 @@ local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecraft:chest'
 local MAX_ITEM_COUNT = 1024
-local DESTINATION_STORAGE = 'sophisticatedstorage:chest_6'
+local DESTINATION_STORAGE = 'sophisticatedstorage:barrel_1'
 local ITEM_NAME_MIN = 4
 
 function DeliverItem(itemName, itemCount)

@@ -5,8 +5,8 @@ local COLONY_NAME = 'Nolins'
 
 
 local source_inventories = {
-    'sophisticatedstorage:chest_3',
-    'sophisticatedstorage:chest_6',
+    'sophisticatedstorage:barrel_1',
+    'sophisticatedstorage:barrel_0',
     'enderstorage:ender_chest_2'
 }
 

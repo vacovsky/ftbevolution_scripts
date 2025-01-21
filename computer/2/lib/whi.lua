@@ -1,6 +1,6 @@
-local warehouse_interface = { _version = '0.0.3' }
+local warehouse_interface = { _version = '0.0.4' }
 
-local warehouses = {'functionalstorage:storage_controller', 'minecraft:chest'} -- "pneumaticcraft:reinforced_chest"
+local warehouses = {'functionalstorage:storage_controller', 'sophisticatedstorage:chest'} -- "pneumaticcraft:reinforced_chest"
 
 function warehouse_interface.ItemCountMap()
     local itemCountMap = {}
@@ -40,7 +40,7 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     local movedItemCount = 0
     local peripherals = peripheral.getNames()
     local warehouses_list = {}
-
+-- todo make netowrk function to take array to warehouse list
     for index, attached_peripheral in pairs(peripherals) do
         for _, vessel in pairs(warehouses) do
             if string.find(attached_peripheral, vessel) then

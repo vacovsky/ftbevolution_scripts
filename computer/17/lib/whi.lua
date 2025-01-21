@@ -1,6 +1,6 @@
-local warehouse_interface = { _version = '0.0.3' }
+local warehouse_interface = { _version = '0.0.4' }
 
-local warehouses = {'functionalstorage:storage_controller', 'minecraft:chest'} -- "pneumaticcraft:reinforced_chest"
+local warehouses = {'functionalstorage:storage_controller', 'sophisticatedstorage:chest'} -- "pneumaticcraft:reinforced_chest"
 
 function warehouse_interface.ItemCountMap()
     local itemCountMap = {}
