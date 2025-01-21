@@ -1,6 +1,7 @@
 shell.openTab("hive_collector")
 shell.openTab("honey_depositer")
 shell.openTab("processed_comb_storing")
+shell.openTab("beehive_bottle_stocker")
 
 
 -- shell.openTab("fuge_unloader")
