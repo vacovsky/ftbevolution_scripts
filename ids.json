@@ -10,17 +10,18 @@
   "peripheral.enderio:stirling_generator": 0,
   "peripheral.basicFluidTank": 5,
   "peripheral.pneumaticcraft:small_tank": 14,
-  "peripheral.productivebees:honey_generator": 1,
+  "peripheral.productivebees:honey_generator": 18,
   "peripheral.minecraft:blast_furnace": 13,
   "peripheral.productivebees:expansion_box": 1,
   "peripheral.functionalstorage:framed_fluid_1": 4,
-  "peripheral.functionalstorage:storage_controller": 0,
-  "peripheral.functionalstorage:framed_1": 1,
+  "peripheral.functionalstorage:storage_controller": 1,
+  "peripheral.functionalstorage:framed_1": 3,
   "peripheral.minecraft:barrel": 0,
-  "peripheral.enderstorage:ender_chest": 4,
+  "peripheral.enderstorage:ender_chest": 5,
   "peripheral.enderstorage:ender_tank": 1,
   "peripheral.productivebees:gene_indexer": 3,
   "peripheral.sophisticatedstorage:barrel": 2,
   "peripheral.turtle": 0,
-  "peripheral.monitor": 0
+  "peripheral.monitor": 0,
+  "peripheral.enderio:crafter": 1
 }

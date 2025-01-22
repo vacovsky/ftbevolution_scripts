@@ -2,7 +2,6 @@ local json = require "lib/json"
 local vars = require "lib/constants"
 local whi = require "lib/whi"
 
--- local combs_source = 'enderstorage:ender_chest_5'
 local indexer = 'productivebees:gene_indexer_0'
 local genes = 'productivebees:gene'
 

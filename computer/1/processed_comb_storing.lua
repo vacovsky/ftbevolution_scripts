@@ -2,7 +2,7 @@ local json = require "lib/json"
 local vars = require "lib/constants"
 local whi = require "lib/whi"
 
-local processed_outputs = 'enderstorage:ender_chest_2'
+local processed_outputs = 'enderstorage:ender_chest_5'
 
 function CollectProcessedItems()
     local itemsMoved = 0
