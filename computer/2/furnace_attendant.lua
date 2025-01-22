@@ -9,7 +9,7 @@ local max_result_allowed = 512
 local furnaces = 'furnace'
 -- local furnaces = 'minecraft:furnace'
 local waxfuel = 'productivebees:wax'
-local generator_coalbox = 'sophisticatedstorage:barrel_2'
+local generator_coalbox = 'sophisticatedstorage:barrel_3'
 local coalfuel = 'minecraft:coal'
 local raw_items = {
     -- 'minecraft:cobblestone',
@@ -49,12 +49,15 @@ function AttendFurnaces()
 end
 
 function FuelGenerators()
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'fueled (coal)')
+    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
+    print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
+
 end
 
 while true do
     pcall(FuelGenerators)
+    -- FuelGenerators()
     -- if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
     pcall(AttendFurnaces)
     -- pcall(AttendFurnaces())

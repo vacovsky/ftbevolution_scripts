@@ -2,9 +2,9 @@
   "peripheral.productivebees:advanced_hive": 52,
   "peripheral.minecraft:furnace": 13,
   "peripheral.minecraft:chest": 79,
-  "computer": 21,
+  "computer": 23,
   "peripheral.sophisticatedstorage:chest": 70,
-  "peripheral.computer": 9,
+  "peripheral.computer": 10,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
   "peripheral.productivebees:centrifuge": 141,
   "peripheral.enderio:stirling_generator": 0,
@@ -17,11 +17,13 @@
   "peripheral.functionalstorage:storage_controller": 1,
   "peripheral.functionalstorage:framed_1": 3,
   "peripheral.minecraft:barrel": 0,
-  "peripheral.enderstorage:ender_chest": 5,
+  "peripheral.enderstorage:ender_chest": 7,
   "peripheral.enderstorage:ender_tank": 1,
   "peripheral.productivebees:gene_indexer": 3,
-  "peripheral.sophisticatedstorage:barrel": 2,
+  "peripheral.sophisticatedstorage:barrel": 4,
   "peripheral.turtle": 0,
   "peripheral.monitor": 0,
-  "peripheral.enderio:crafter": 1
+  "peripheral.enderio:crafter": 1,
+  "peripheral.enderio:conduit": 0,
+  "peripheral.industrialforegoing:mycelial_culinary": 3
 }

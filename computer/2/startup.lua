@@ -10,6 +10,6 @@ shell.openTab("turtle_honey_power")
 -- shell.openTab("fuge_unloader")
 
 shell.openTab("gene_collector")
--- shell.openTab("honey_bottler")
+shell.openTab("mycelial_generator")
 -- shell.openTab("honey_spout_filler")
 -- shell.openTab("breeder_power_fuel")
