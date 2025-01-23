@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.7' }
+local warehouse_interface = { _version = '0.0.8' }
 
 local net = require "lib/network"
 
@@ -85,9 +85,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                         foundCount = foundCount + pushedCount
                     end                    
                     if foundCount >= itemCount then
-                        print('Order successfully filled!')
+                        -- print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('Returned', itemCount, itemName)
+                        print('OK', itemCount, itemName)
                         goto found
                     end
                 end
@@ -98,9 +98,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                         foundCount = foundCount + pushedCount
                     end
                     if foundCount >= itemCount then
-                        print('Order successfully filled!')
+                        -- print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('Returned', itemCount, item.name)
+                        print('OK', itemCount, itemName)
                         goto found
                     end
                 end
