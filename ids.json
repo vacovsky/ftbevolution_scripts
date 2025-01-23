@@ -1,7 +1,7 @@
 {
-  "peripheral.productivebees:advanced_hive": 52,
+  "peripheral.productivebees:advanced_hive": 69,
   "peripheral.minecraft:furnace": 13,
-  "peripheral.minecraft:chest": 82,
+  "peripheral.minecraft:chest": 83,
   "computer": 23,
   "peripheral.sophisticatedstorage:chest": 70,
   "peripheral.computer": 10,
@@ -23,8 +23,8 @@
   "peripheral.sophisticatedstorage:barrel": 4,
   "peripheral.turtle": 0,
   "peripheral.monitor": 0,
-  "peripheral.enderio:crafter": 3,
-  "peripheral.enderio:conduit": 3,
+  "peripheral.enderio:crafter": 5,
+  "peripheral.enderio:conduit": 4,
   "peripheral.industrialforegoing:mycelial_culinary": 3,
   "peripheral.productivebees:feeder": 0
 }
