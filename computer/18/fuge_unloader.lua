@@ -1,25 +1,15 @@
+local net = require 'lib/network'
 local json = require "lib/json"
 local vars = require "lib/constants"
+local whi = require "lib/whi"
 
 local combs_dest = 'enderstorage:ender_chest_3'
 local fluid_dest = 'enderstorage:ender_tank_0'
 
 
-
-function ListCentrifuges()
-    local fuge_list = {}
-    local peripherals = peripheral.getNames()
-    for _, attached_peripheral in pairs(peripherals) do
-        if string.find(attached_peripheral, vars.fuges) then
-            fuge_list[#fuge_list + 1] = attached_peripheral
-        end
-    end
-    return fuge_list
-end
-
 function UnloadFuges()
     local combsMoved = 0
-    for _, fuge in pairs(ListCentrifuges()) do
+    for _, fuge in pairs(net.ListMatchingDevices(vars.fuges)) do
         local pfuge = peripheral.wrap(fuge)
         local pcombdest = peripheral.wrap(combs_dest)
         local pfluiddest = peripheral.wrap(fluid_dest)
@@ -31,11 +21,13 @@ function UnloadFuges()
         end
         pfluiddest.pullFluid(fuge)
     end
+    print('Tranferred', combsMoved, 'combs')
 end
 
 while true do
-    pcall(UnloadFuges)
+    -- UnloadFuges()
+    if not pcall(UnloadFuges) then print('UnloadFuges() exited with error') end
 
-    print('Tranferred', combsMoved, 'combs')
+
     sleep(5)
 end

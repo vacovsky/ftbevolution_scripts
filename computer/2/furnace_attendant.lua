@@ -55,10 +55,12 @@ function FuelGenerators()
 end
 
 while true do
-    pcall(FuelGenerators)
+    if not pcall(FuelGenerators) then print('FuelGenerators() failed to complete') end
+    if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
+
+    -- pcall(FuelGenerators)
     -- FuelGenerators()
-    -- if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
-    pcall(AttendFurnaces)
+    -- pcall(AttendFurnaces)
     -- pcall(AttendFurnaces())
-    sleep(60)
+    sleep(15)
 end
