@@ -17,7 +17,7 @@ function FillGeneratorsFromHoneyStorage()
     for index, attached_peripheral in pairs(honey_generators) do
         local gen = peripheral.wrap(attached_peripheral)
         for _, honeybucket in pairs(honey_storage) do
-            honeyUsed = gen.pullFluid(honeybucket, 2500)
+            honeyUsed = gen.pullFluid(honeybucket, 10000)
             honey_block_used = whi.GetFromAnyWarehouse(false, 'minecraft:honey_block', attached_peripheral, 5)
         end
     end

@@ -8,7 +8,7 @@ local fluid_dest = 'enderstorage:ender_tank_0'
 
 
 function UnloadFuges()
-    local combsMoved = 0
+    local items = 0
     for _, fuge in pairs(net.ListMatchingDevices(vars.fuges)) do
         local pfuge = peripheral.wrap(fuge)
         local pcombdest = peripheral.wrap(combs_dest)
@@ -16,12 +16,12 @@ function UnloadFuges()
 
         for slot, item in pairs(pfuge.list()) do
             if not string.find(item.name, 'comb') then
-                pcombdest.pullItems(fuge, slot)
+                items = items + pcombdest.pullItems(fuge, slot)
             end
         end
         pfluiddest.pullFluid(fuge)
     end
-    print('Tranferred', combsMoved, 'combs')
+    print('xfer', items, 'items')
 end
 
 while true do
