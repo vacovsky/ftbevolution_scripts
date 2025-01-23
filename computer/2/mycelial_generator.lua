@@ -13,6 +13,7 @@ local raw_items = {
 }
 
 function AppleCrafterSupply()
+
     print(whi.GetFromAnyWarehouse(false, 'minecraft:gold_ingot', goldenAppleCrafter, 8), 'crafter: input gold_ingot')
     print(whi.GetFromAnyWarehouse(false, fuelEssence, insaniumAppleCrafter, 4), 'crafter: input insanium')
 end
@@ -22,7 +23,6 @@ function FuelGenerators()
     local gens = net.ListMatchingDevices(genNames)
     local apple_crafter = peripheral.wrap(fuelSource)
     for slot, item in pairs(apple_crafter.list()) do
-        print(slot, item.name)
         if item.name == fuelName then
             local stored = 0
             stored = whi.DepositInAnyWarehouse(fuelSource, slot)
@@ -37,7 +37,7 @@ function FuelGenerators()
 end
 
 while true do
-    if not pcall(GoldenAppleCrafterSupply) then print('GoldenAppleCrafterSupply() failed to complete') end
+    if not pcall(AppleCrafterSupply) then print('GoldenAppleCrafterSupply() failed to complete') end
     if not pcall(FuelGenerators) then print('FuelGenerators() failed to complete') end
     
     -- pcall(GoldenAppleCrafterSupply)
