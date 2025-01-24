@@ -12,12 +12,11 @@ shell.openTab("warehouse_scoreboard")
 local LAST_SELECTION = ''
 
 local WAREHOUSE = 'minecraft:chest'
-local MAX_ITEM_COUNT = 1024
+local MAX_ITEM_COUNT = 9999
 local DESTINATION_STORAGE = 'sophisticatedstorage:barrel_1'
 local ITEM_NAME_MIN = 4
 
 function DeliverItem(itemName, itemCount, exact)
-    -- if exact == nil and itemCount == nil then exact = false
     exact = exact == "x"
     if itemName == nil then return true end
     -- ENFORCE MINIMUM ITEM NAME
@@ -33,11 +32,8 @@ function DeliverItem(itemName, itemCount, exact)
         foundCount = foundCount + whi.GetFromAnyWarehouse(false, itemName, DESTINATION_STORAGE, itemCount, slot)
     else
         foundCount = foundCount + whi.GetFromAnyWarehouse(true, itemName, DESTINATION_STORAGE, itemCount, slot)
-    end
-    if foundCount >= 0 then print('Order successfully filled!') end
-    
+    end    
     print('delivered', foundCount, itemName)
-
     return true
 end
 
