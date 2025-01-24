@@ -2,7 +2,7 @@
   "peripheral.productivebees:advanced_hive": 69,
   "peripheral.minecraft:furnace": 13,
   "peripheral.minecraft:chest": 83,
-  "computer": 23,
+  "computer": 24,
   "peripheral.sophisticatedstorage:chest": 70,
   "peripheral.computer": 10,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
@@ -11,7 +11,7 @@
   "peripheral.basicFluidTank": 5,
   "peripheral.pneumaticcraft:small_tank": 14,
   "peripheral.productivebees:honey_generator": 18,
-  "peripheral.minecraft:blast_furnace": 13,
+  "peripheral.minecraft:blast_furnace": 17,
   "peripheral.productivebees:expansion_box": 1,
   "peripheral.functionalstorage:framed_fluid_1": 4,
   "peripheral.functionalstorage:storage_controller": 1,
@@ -27,5 +27,6 @@
   "peripheral.enderio:conduit": 4,
   "peripheral.industrialforegoing:mycelial_culinary": 3,
   "peripheral.productivebees:feeder": 5,
-  "peripheral.enderio:vibrant_capacitor_bank": 0
+  "peripheral.enderio:vibrant_capacitor_bank": 0,
+  "peripheral.ars_nouveau:imbuement_chamber": 15
 }

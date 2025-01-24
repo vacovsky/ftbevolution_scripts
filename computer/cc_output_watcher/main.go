@@ -7,6 +7,7 @@ import (
 
 var WATCHED_FILES = []string{
 	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/warehouse.json`,
+	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/power.json`,
 }
 
 func main() {

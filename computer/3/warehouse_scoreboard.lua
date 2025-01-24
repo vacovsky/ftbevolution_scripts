@@ -61,11 +61,11 @@ end
 
 function PowerStats() 
     local data = {
-        energy_capacity = 0
+        energy_capacity = 0,
         energy_stored = 0
     }
-    local powerPeripheral = peripheral.wrap(POWER_BANK)
     for _, batt in pairs(net.ListMatchingDevices(POWER_BANK)) do
+        local powerPeripheral = peripheral.wrap(batt)
         data.energy_capacity = data.energy_capacity + powerPeripheral.getEnergyCapacity()
         data.energy_stored = data.energy_stored + powerPeripheral.getEnergy()
     end
@@ -73,10 +73,10 @@ function PowerStats()
 end
 
 
-print('Starting colony stats board...')
+print('Starting stats collection...')
 while true do
     if not pcall(WarehouseStats) then print('WarehouseStats() failed to complete') end
     if not pcall(PowerStats) then print('PowerStats() failed to complete') end
-
+    -- PowerStats()
     sleep(REFRESH_TIME)
 end

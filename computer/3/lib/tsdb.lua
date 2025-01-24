@@ -11,11 +11,8 @@ function tsdb.WriteOutput(pathPrefix, keyPrefix, data, fileName)
         },
     }
     for k, v in pairs(data) do
-        print(k, v)
         processed[pathPrefix..':'..keyPrefix][k] = v
     end
-    -- processed[pathPrefix..':'..keyPrefix].name = pathPrefix .. keyPrefix
-
     WriteToFile(json.encode(processed), fileName, "w")
 end
 
