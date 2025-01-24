@@ -2,10 +2,11 @@
 ----------------------------------
 local whi = require 'lib/whi'
 local tsdb = require 'lib/tsdb'
+local net = require 'lib/network'
 
 -- CONFIGURATION SECTION
-local REFRESH_TIME = 300
-
+local REFRESH_TIME = 60
+local POWER_BANK = 'enderio:vibrant_capacitor_bank'
 -- END CONFIGURATION SECTION
 ----------------------------------
 local monitor = peripheral.find("monitor")
@@ -19,7 +20,7 @@ function RightJustify(input, line)
     monitor.setCursorPos(monitor.getSize() - string.len(input), line)
 end
 
-function DisplayLatestInfo()
+function WarehouseStats()
     local item_freq = whi.ItemCountMap()
     local tempTbl = {}
     local wh_used, wh_total = whi.InventoryUsedPercentage()
@@ -29,6 +30,10 @@ function DisplayLatestInfo()
         table.insert(tempTbl, x)
         data[x.name] = x.count
     end
+
+    data["warehouse_slots_total"] = wh_total
+    data["warehouse_slots_used"] = wh_used
+
     print(wh_used, wh_total)
     table.sort(tempTbl, function(a, b) return  a.count > b.count end)
 
@@ -54,14 +59,24 @@ function DisplayLatestInfo()
     end
 end
 
-
-function Main()
-    DisplayLatestInfo()
+function PowerStats() 
+    local data = {
+        energy_capacity = 0
+        energy_stored = 0
+    }
+    local powerPeripheral = peripheral.wrap(POWER_BANK)
+    for _, batt in pairs(net.ListMatchingDevices(POWER_BANK)) do
+        data.energy_capacity = data.energy_capacity + powerPeripheral.getEnergyCapacity()
+        data.energy_stored = data.energy_stored + powerPeripheral.getEnergy()
+    end
+    tsdb.WriteOutput("FTBEvolution", "power", data, "power.json")
 end
+
 
 print('Starting colony stats board...')
 while true do
-    -- Main()
-    pcall(Main)
+    if not pcall(WarehouseStats) then print('WarehouseStats() failed to complete') end
+    if not pcall(PowerStats) then print('PowerStats() failed to complete') end
+
     sleep(REFRESH_TIME)
 end
