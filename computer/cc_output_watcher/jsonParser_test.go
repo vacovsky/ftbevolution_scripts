@@ -13,7 +13,7 @@ func Test_ingestMonitorDataToRedis(t *testing.T) {
 		{
 			name: "1",
 			args: args{
-				filePath: `E:\minecraft_servers\direwolf20_1.12\world\computercraft\computer\40\monitorData.json`,
+				filePath: `E:\minecraft_servers\direwolf20_1.12\world\computercraft\computer\40\items.json`,
 			},
 		},
 	}

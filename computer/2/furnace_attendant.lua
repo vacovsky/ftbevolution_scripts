@@ -50,8 +50,8 @@ end
 
 function FuelGenerators()
     print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
-    print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
+    -- print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
+    -- print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
 end
 
 while true do
