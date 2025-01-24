@@ -8,6 +8,11 @@ import (
 var WATCHED_FILES = []string{
 	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/warehouse.json`,
 	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/power.json`,
+
+	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/25/heartbeat.json`,
+	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/26/heartbeat.json`,
+	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/27/heartbeat.json`,
+	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/28/heartbeat.json`,
 }
 
 func main() {
