@@ -12,8 +12,10 @@ function ImbueStuff()
     for _, ic in pairs(net.ListMatchingDevices(imbuementChamber)) do
         local icp = peripheral.wrap(ic)
         
-        for slot, _ in pairs(icp.list()) do
-            stored = stored + whi.DepositInAnyWarehouse(ic, slot)
+        for slot, item in pairs(icp.list()) do
+            if item.name == "ars_nouveau:source_gem" then
+                stored = stored + whi.DepositInAnyWarehouse(ic, slot)
+            end
         end
         imbuing = imbuing + whi.GetFromAnyWarehouse(false, 'minecraft:amethyst_shard', ic, 1)
     end

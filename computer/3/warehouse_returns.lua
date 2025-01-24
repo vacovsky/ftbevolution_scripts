@@ -17,5 +17,5 @@ print('Starting automated warehouse return system...')
 while true do
     if not pcall(ReturnWares) then print('ReturnWares() failed to complete') end
     -- ReturnWares()
-    sleep(300)
+    sleep(1800)
 end
