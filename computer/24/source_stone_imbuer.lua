@@ -13,11 +13,11 @@ function ImbueStuff()
         local icp = peripheral.wrap(ic)
         
         for slot, item in pairs(icp.list()) do
-            if item.name == "ars_nouveau:source_gem" then
+            if item.name ~= "ars_nouveau:source_gem" then
                 stored = stored + whi.DepositInAnyWarehouse(ic, slot)
             end
         end
-        imbuing = imbuing + whi.GetFromAnyWarehouse(false, 'minecraft:amethyst_shard', ic, 1)
+        imbuing = imbuing + whi.GetFromAnyWarehouse(false, 'ars_nouveau:source_gem', ic, 1)
     end
     print("stored", stored, "imbuing", imbuing)
 end
@@ -28,5 +28,5 @@ print('Starting stats collection...')
 while true do
     if not pcall(ImbueStuff) then print('ImbueStuff() failed to complete') end
     -- ImbueStuff()
-    sleep(45)
+    sleep(10)
 end
