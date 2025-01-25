@@ -5,21 +5,37 @@ local whi = require "lib/whi"
 
 local combs_source = 'enderstorage:ender_chest_0'
 
-function LoadFuges()
+function LoadFugesWithCombs()
     local combsMoved = 0
     for _, fuge in pairs(net.ListMatchingDevices(vars.fuges)) do
         local pfuge = peripheral.wrap(fuge)
         local pcombsrc = peripheral.wrap(combs_source)
         for slot, item in pairs(pcombsrc.list()) do
-            if string.find(item.name, 'productivebees:') then
+            if string.find(item.name, 'productivebees:configurable_honeycomb') then
+                combsMoved = combsMoved + pfuge.pullItems(combs_source, slot)
+            end
+
+        end
+    end
+    print('Transferred', combsMoved, 'combs')
+end
+
+function LoadFugesWithCombBlocks()
+    local combsMoved = 0
+    for _, fuge in pairs(net.ListMatchingDevices(vars.heated_fuges)) do
+        local pfuge = peripheral.wrap(fuge)
+        local pcombsrc = peripheral.wrap(combs_source)
+        for slot, item in pairs(pcombsrc.list()) do
+            if string.find(item.name, 'productivebees:configurable_comb') then
                 combsMoved = combsMoved + pfuge.pullItems(combs_source, slot)
             end
         end
     end
-    print('Tranferred', combsMoved, 'combs')
+    print('Transferred', combsMoved, 'blocks')
 end
+
 while true do
-    -- LoadFuges()
-    if not pcall(LoadFuges) then print('LoadFuges() exited with error') end
+    if not pcall(LoadFugesWithCombBlocks) then print('LoadFugesWithCombBlocks() exited with error') end    
+    if not pcall(LoadFugesWithCombs) then print('LoadFugesWithCombs() exited with error') end
     sleep(5)
 end

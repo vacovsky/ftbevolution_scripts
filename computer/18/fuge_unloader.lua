@@ -9,7 +9,7 @@ local fluid_dest = 'enderstorage:ender_tank_0'
 
 function UnloadFuges()
     local items = 0
-    for _, fuge in pairs(net.ListMatchingDevices(vars.fuges)) do
+    for _, fuge in pairs(net.ListMultipleMatchingDevices({vars.fuges, vars.heated_fuges})) do
         local pfuge = peripheral.wrap(fuge)
         local pcombdest = peripheral.wrap(combs_dest)
         local pfluiddest = peripheral.wrap(fluid_dest)
@@ -27,7 +27,5 @@ end
 while true do
     -- UnloadFuges()
     if not pcall(UnloadFuges) then print('UnloadFuges() exited with error') end
-
-
-    sleep(5)
+    sleep(0.1)
 end

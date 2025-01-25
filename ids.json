@@ -6,7 +6,7 @@
   "peripheral.sophisticatedstorage:chest": 70,
   "peripheral.computer": 10,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
-  "peripheral.productivebees:centrifuge": 212,
+  "peripheral.productivebees:centrifuge": 348,
   "peripheral.enderio:stirling_generator": 0,
   "peripheral.basicFluidTank": 5,
   "peripheral.pneumaticcraft:small_tank": 14,
@@ -28,5 +28,7 @@
   "peripheral.industrialforegoing:mycelial_culinary": 3,
   "peripheral.productivebees:feeder": 5,
   "peripheral.enderio:vibrant_capacitor_bank": 0,
-  "peripheral.ars_nouveau:imbuement_chamber": 17
+  "peripheral.ars_nouveau:imbuement_chamber": 17,
+  "peripheral.productivebees:heated_centrifuge": 1,
+  "peripheral.productivebees:powered_centrifuge": 2
 }
