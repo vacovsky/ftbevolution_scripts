@@ -23,9 +23,13 @@ local raw_items = {
     -- 'scguns:crushed_raw_anthralite',
     -- 'scguns:diamond_steel_blend',
     -- 'minecraft:rotten_flesh',
-    'minecraft:raw_gold',
-    'minecraft:raw_copper',
-    'minecraft:raw_iron',
+    -- 'minecraft:raw_gold',
+    "raw_ore",
+    ":raw_",
+    ":crushed_raw_",
+    -- 'minecraft:raw_gold',
+    -- 'minecraft:raw_copper',
+    -- 'minecraft:raw_iron',
     -- 'scguns:raw_anthralite',
 }
 
@@ -39,7 +43,7 @@ function AttendFurnaces()
             -- move smelted items to warehouse
             print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
             -- move item for smelting to furnace
-            moved = moved + whi.GetFromAnyWarehouse(false, raw_item, furnace, 64, 1)
+            moved = moved + whi.GetFromAnyWarehouse(true, raw_item, furnace, 64, 1)
             if moved >= 32 then
                 goto next_item
             end

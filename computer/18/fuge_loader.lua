@@ -7,7 +7,7 @@ local combs_source = 'enderstorage:ender_chest_0'
 
 function LoadFugesWithCombs()
     local combsMoved = 0
-    for _, fuge in pairs(net.ListMatchingDevices(vars.fuges)) do
+    for _, fuge in pairs(net.ListMultipleMatchingDevices({vars.fuges, vars.powered_fuges, vars.heated_fuges})) do
         local pfuge = peripheral.wrap(fuge)
         local pcombsrc = peripheral.wrap(combs_source)
         for slot, item in pairs(pcombsrc.list()) do

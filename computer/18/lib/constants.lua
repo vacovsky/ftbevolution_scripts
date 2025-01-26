@@ -13,6 +13,7 @@ vars.hives = 'productivebees:advanced_'
 vars.furnaces = 'minecraft:furnace'
 vars.blast_furnaces = 'minecraft:blast_furnace'
 vars.fuges = 'productivebees:centrifuge'
+vars.powered_fuges = 'productivebees:powered_centrifuge'
 vars.heated_fuges = 'productivebees:heated_centrifuge'
 
 vars.generators = '_generator'
