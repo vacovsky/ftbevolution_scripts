@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.7' }
+local warehouse_interface = { _version = '0.0.9' }
 
 local net = require "lib/network"
 
@@ -53,15 +53,17 @@ function warehouse_interface.ItemCountMap()
 end
 
 function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
-    -- print(sourceStorage, sourceSlot)
     local movedItemCount = 0
-    local peripherals = peripheral.getNames()
-    local warehouses = {}
-    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
-
+    local warehouses = net.ListMultipleMatchingDevices(warehouses_list)
+    local source = peripheral.wrap(sourceStorage)
     for whi, warehouse in pairs(warehouses) do
-        movedItemCount = movedItemCount + peripheral.wrap(warehouse).pullItems(sourceStorage, sourceSlot)
+        local w = peripheral.wrap(warehouse)
+        if w.size() - #w.list() == 0 then goto skip_chest end
+        movedItemCount = movedItemCount + w.pullItems(sourceStorage, sourceSlot)
+        if source.list()[sourceSlot] == nil then goto done end
+        ::skip_chest::
     end
+    ::done::
     return movedItemCount
 end
 
@@ -85,9 +87,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                         foundCount = foundCount + pushedCount
                     end                    
                     if foundCount >= itemCount then
-                        print('Order successfully filled!')
+                        -- print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('Returned', itemCount, itemName)
+                        print('OK', itemCount, itemName)
                         goto found
                     end
                 end
@@ -98,9 +100,9 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                         foundCount = foundCount + pushedCount
                     end
                     if foundCount >= itemCount then
-                        print('Order successfully filled!')
+                        -- print('Order successfully filled!')
                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('Returned', itemCount, item.name)
+                        print('OK', itemCount, itemName)
                         goto found
                     end
                 end
