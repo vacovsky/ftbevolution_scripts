@@ -25,7 +25,10 @@ function WarehouseStats()
     local tempTbl = {}
     local wh_used, wh_total = whi.InventoryUsedPercentage()
 
-    local data = {}
+    local data = {
+        ["minecraft:gold_ingot"] = 0,
+        ["mysticalagradditions:insanium_essence"] = 0
+    }
     for _, x in pairs(item_freq) do 
         table.insert(tempTbl, x)
         data[x.name] = x.count
