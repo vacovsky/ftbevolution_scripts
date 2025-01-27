@@ -32,7 +32,6 @@ end
 function PlaceTargetItemInEnchanter()
     local input = peripheral.wrap(ITEM_INPUT)
     local ea = peripheral.wrap(enchanter)
-
     for slot, item in pairs(input.list()) do
         ea.pullItems(ITEM_INPUT, slot)
     end
@@ -51,17 +50,39 @@ function LoadPedestalsWithMaterials(recipe)
 end
 
 function EnchantItem(recipe)
+    term.clear()
+    print("\n\n             Enchanting", recipe, 
+    "\n\n             This may take a while")
+    print("\n \n \n \n \n")
     UnloadAllPedestals()
-    LoadPedestalsWithMaterials(recipe)
+    LoadPedestalsWithMaterials(enchants[recipe])
     PlaceTargetItemInEnchanter()
     sleep(15)
     ReturnTargetItemToUser()
-    UnloadAllPedestals()
 end
-
 
 while true do
-    if not pcall(EnchantItem, enchants.soulbound) then print('EnchantItem() failed to complete') end
-    -- EnchantItem(enchants.soulbound)
-    sleep(1)
+    term.clear()
+    term.setBackgroundColor(colors.black)
+
+    print("Enter enchant name from the list below. Item in the left storage will be enchanted, if possible.\n\n")
+    for name, _ in pairs(enchants) do
+        print(name)
+    end
+    write("\n\nENCH_UI> ")
+    local msg = read()
+    if msg == nil then goto continue end
+    local words = {}
+    for word in msg:gmatch("%S+") do
+        pcall(table.insert, words, word)
+    end
+    if not pcall(EnchantItem, words[1]) then print('EnchantItem() failed to complete') end
+    ::continue::
 end
+
+
+-- while true do
+--     if not pcall(EnchantItem, enchants.soulbound) then print('EnchantItem() failed to complete') end
+--     -- EnchantItem(enchants.soulbound)
+--     sleep(1)
+-- end
