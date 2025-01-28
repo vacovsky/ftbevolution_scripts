@@ -1,3 +1,6 @@
+rednet.open("bottom")
+local PROTOCOL = "whi_index"
+
 local warehouse_interface = { _version = '0.0.10' }
 
 local net = require "lib/network"
@@ -31,13 +34,17 @@ function warehouse_interface.ItemLocationMap()
         for slot, item in pairs(whp.list()) do
             if itemLocationIndex[item.name] == nil then
                 itemLocationIndex[item.name] = {
-                    name = item.name
+                    name = item.name,
+                    warehouses = {}
                 }
             end
-            if itemLocationIndex[item.name][warehouse] == nil then
-                itemLocationIndex[item.name][warehouse] = {}
+            if itemLocationIndex[item.name].warehouses[warehouse] == nil then
+                itemLocationIndex[item.name].warehouses[warehouse] = {
+                    name = warehouse,
+                    slots = {}
+                }
             end
-            table.insert(itemLocationIndex[item.name][warehouse], slot)
+            table.insert(itemLocationIndex[item.name].warehouses[warehouse].slots, slot)
         end
     end
     return itemLocationIndex
@@ -83,6 +90,7 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     return movedItemCount
 end
 
+
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
     -- COLLECT WAREHOUSE NAMES
@@ -90,47 +98,87 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     table.sort(peripherals)
     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
+    
+    rednet.broadcast("index", PROTOCOL)
+    local _, itemLocationsIndex, _ = rednet.receive(1)
+
     -- SEARCH EACH WAREHOUSE FOR ITEM
-    local foundCount = 0
-    for whi, warehouse in pairs(warehouses) do
-        local whp = peripheral.wrap(warehouse)
-        for slot, item in pairs(whp.list()) do
-            -- must be exact name match
-            if not guess then
-                if item.name == itemName then
-                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    if pushedCount ~= nil then
-                        foundCount = foundCount + pushedCount
-                    end                    
-                    if foundCount >= itemCount then
-                        -- print('Order successfully filled!')
-                        -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('OK', itemCount, itemName)
-                        goto found
-                    end
+    local pushedCount = 0
+
+    for itemKey, itemLocs in pairs(itemLocationsIndex) do
+        if not guess and itemKey == itemName then
+            for _, warehouse in pairs(itemLocs.warehouses) do
+                local whp = peripheral.wrap(warehouse.name)
+                for _, slot in pairs(warehouse.slots) do
+                    pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+                    if pushedCount >= itemCount then goto found end
                 end
-            else
-                if string.find(item.name, itemName) then
-                    local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
-                    if pushedCount ~= nil then
-                        foundCount = foundCount + pushedCount
-                    end
-                    if foundCount >= itemCount then
-                        -- print('Order successfully filled!')
-                        -- EXIT WHEN WE HAVE DELIVERED ENOUGH
-                        print('OK', itemCount, itemName)
-                        goto found
+            end
+        else 
+            if string.find(itemKey, itemName) then
+                for _, warehouse in pairs(itemLocs.warehouses) do
+                    local whp = peripheral.wrap(warehouse.name)
+                    for _, slot in pairs(warehouse.slots) do
+                        pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+                        if pushedCount >= itemCount then goto found end
                     end
                 end
             end
-            -- TODO fuzzy match here
-            -- end fuzzy
         end
-        if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
+        if itemCount < pushedCount then print('Only located', pushedCount, 'of', itemCount) end
     end
     ::found::
-    return foundCount
+    return pushedCount
 end
+
+-- function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
+--     if not itemCount then itemCount = 64 end
+--     -- COLLECT WAREHOUSE NAMES
+--     local peripherals = peripheral.getNames()
+--     table.sort(peripherals)
+--     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
+
+--     -- SEARCH EACH WAREHOUSE FOR ITEM
+--     local foundCount = 0
+--     for whi, warehouse in pairs(warehouses) do
+--         local whp = peripheral.wrap(warehouse)
+--         for slot, item in pairs(whp.list()) do
+--             -- must be exact name match
+--             if not guess then
+--                 if item.name == itemName then
+--                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+--                     if pushedCount ~= nil then
+--                         foundCount = foundCount + pushedCount
+--                     end                    
+--                     if foundCount >= itemCount then
+--                         -- print('Order successfully filled!')
+--                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
+--                         print('OK', itemCount, itemName)
+--                         goto found
+--                     end
+--                 end
+--             else
+--                 if string.find(item.name, itemName) then
+--                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+--                     if pushedCount ~= nil then
+--                         foundCount = foundCount + pushedCount
+--                     end
+--                     if foundCount >= itemCount then
+--                         -- print('Order successfully filled!')
+--                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
+--                         print('OK', itemCount, itemName)
+--                         goto found
+--                     end
+--                 end
+--             end
+--             -- TODO fuzzy match here
+--             -- end fuzzy
+--         end
+--         if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
+--     end
+--     ::found::
+--     return foundCount
+-- end
 
 function warehouse_interface.tprint(tbl, indent)
     if not indent then indent = 0 end
