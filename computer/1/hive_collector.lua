@@ -38,7 +38,7 @@ end
 
 print("Starting hive collector...")
 while true do
-    -- if not pcall(CollectFromHives) then print('CollectFromHives() failed to complete') end
-    CollectFromHives()
+    if not pcall(CollectFromHives) then print('CollectFromHives() failed to complete') end
+    -- CollectFromHives()
     sleep(.1)
 end

@@ -2,7 +2,7 @@ local json = require "lib/json"
 local vars = require "lib/constants"
 local net = require "lib/network"
 
-local fluid_source = 'enderstorage:ender_tank_1'
+local fluid_source = 'enderstorage:ender_tank_2'
 
 function DepositFluids()
     local fluidPushed = 0
