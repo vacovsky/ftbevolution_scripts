@@ -1,4 +1,4 @@
-rednet.open("bottom")
+-- rednet.open("bottom")
 -- rednet.open("back")
 
 local INDEX_PROTOCOL = "whi_index"

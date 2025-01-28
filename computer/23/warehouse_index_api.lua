@@ -9,16 +9,16 @@ rednet.host(PROTOCOL, "INDEX")
 
 
 local INDEX = {}
-local LAST_INDEX_UPDATE = os.epoch('utc')
+local LAST_INDEX_UPDATE = 0
 
 function PopulateIndex()
     INDEX = whi.ItemLocationMap()
+    LAST_INDEX_UPDATE = os.epoch('utc')
     tsdb.WriteOutput("ftb", "cache", INDEX, "index_cache.json")
 end
 
 print("Populating index...")
 PopulateIndex()
-LAST_INDEX_UPDATE = os.epoch('utc')
 print("Populating index complete. Now serving!")
 
 while true do

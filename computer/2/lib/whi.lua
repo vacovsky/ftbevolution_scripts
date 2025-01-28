@@ -1,10 +1,10 @@
 rednet.open("bottom")
 -- rednet.open("back")
 
+local LAST_INDEX_TIME = 0
 local INDEX_PROTOCOL = "whi_index"
 local INDEX_SERVER = "INDEX"
-local WAREHOUSE_INDEX_ID = 23
-
+local LAST_INDEX = {}
 local warehouse_interface = { _version = '0.0.10' }
 
 local net = require "lib/network"
@@ -106,8 +106,11 @@ end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
-    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
-    local itemLocationsIndex = GetItemsLocationTable()
+
+    if os.epoch('utc') - LAST_INDEX_TIME > 30 then
+        LAST_INDEX = GetItemsLocationTable()
+        LAST_INDEX_TIME = os.epoch('utc')
+    end
     local pushedCount = 0
 
     for itemKey, itemLocs in pairs(itemLocationsIndex) do

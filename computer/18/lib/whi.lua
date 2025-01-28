@@ -1,4 +1,4 @@
-rednet.open("bottom")
+-- rednet.open("bottom")
 local PROTOCOL = "whi_index"
 
 local warehouse_interface = { _version = '0.0.10' }
