@@ -16,7 +16,8 @@ function DepositFluids()
 end
 
 while true do
-   pcall(DepositFluids)
+    if not pcall(DepositFluids) then print('DepositFluids() failed to complete') end
+    -- pcall(DepositFluids)
     sleep(.5)
     fluidPushed = 0
 end

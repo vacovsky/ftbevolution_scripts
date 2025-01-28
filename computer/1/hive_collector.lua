@@ -29,15 +29,17 @@ function CollectFromHives()
                 string.find(item.name, 'comb') and not string.find(item.name, 'sugarbag') then
                 combsMoved = combsMoved + pcombdest.pullItems(hive, slot)
             else
-                whi.DepositInAnyWarehouse(hive, slot)
+                combsMoved = combsMoved + whi.DepositInAnyWarehouse(hive, slot)
             end
         end
     end
     if combsMoved > 0 then print('Tranferred', combsMoved, 'combs') end
 end
 
-while true do
-    pcall(CollectFromHives)
-    sleep(5)
 
+print("Starting hive collector...")
+while true do
+    if not pcall(CollectFromHives) then print('CollectFromHives() failed to complete') end
+    -- pcall(CollectFromHives)
+    sleep(.1)
 end

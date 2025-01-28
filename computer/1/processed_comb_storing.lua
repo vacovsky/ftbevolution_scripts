@@ -14,6 +14,7 @@ function CollectProcessedItems()
 end
 
 while true do
-    pcall(CollectProcessedItems)
+    if not pcall(CollectProcessedItems) then print('CollectProcessedItems() failed to complete') end
+    -- pcall(CollectProcessedItems)
     sleep(1)
 end

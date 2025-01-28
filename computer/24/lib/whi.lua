@@ -5,6 +5,7 @@ local LAST_INDEX_TIME = 0
 local INDEX_PROTOCOL = "whi_index"
 local INDEX_SERVER = "INDEX"
 local LAST_INDEX = {}
+local INDEX_REFRESH_DELAY = 30000 -- 30 seconds
 local warehouse_interface = { _version = '0.0.10' }
 
 local net = require "lib/network"
@@ -107,13 +108,14 @@ end
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
 
-    if os.epoch('utc') - LAST_INDEX_TIME > 30 then
-        LAST_INDEX = GetItemsLocationTable()
+    if os.epoch('utc') - LAST_INDEX_TIME > INDEX_REFRESH_DELAY then
+        -- LAST_INDEX = GetItemsLocationTable()
+        LAST_INDEX = warehouse_interface.ItemLocationMap()
         LAST_INDEX_TIME = os.epoch('utc')
     end
     local pushedCount = 0
 
-    for itemKey, itemLocs in pairs(itemLocationsIndex) do
+    for itemKey, itemLocs in pairs(LAST_INDEX) do
         if not guess and itemKey == itemName then
             for _, warehouse in pairs(itemLocs.warehouses) do
                 local whp = peripheral.wrap(warehouse.name)

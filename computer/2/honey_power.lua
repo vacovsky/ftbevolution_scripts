@@ -42,10 +42,10 @@ while true do
     -- pcall(FillGeneratorsFromHoneyStorage)
     -- FillGeneratorsFromHoneyStorage()
 
-    if not pcall(HoneyBottleCubifier) then print('HoneyBottleCubifier() failed to complete') end
+    -- if not pcall(HoneyBottleCubifier) then print('HoneyBottleCubifier() failed to complete') end
 
     -- pcall(HoneyBottleCubifier)
-    -- HoneyBottleCubifier()
+    HoneyBottleCubifier()
 
     sleep(WAIT_SECONDS)
 end

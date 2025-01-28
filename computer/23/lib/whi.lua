@@ -109,12 +109,13 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     if not itemCount then itemCount = 64 end
 
     if os.epoch('utc') - LAST_INDEX_TIME > INDEX_REFRESH_DELAY then
-        LAST_INDEX = GetItemsLocationTable()
+        -- LAST_INDEX = GetItemsLocationTable()
+        LAST_INDEX = warehouse_interface.ItemLocationMap()
         LAST_INDEX_TIME = os.epoch('utc')
     end
     local pushedCount = 0
 
-    for itemKey, itemLocs in pairs(itemLocationsIndex) do
+    for itemKey, itemLocs in pairs(LAST_INDEX) do
         if not guess and itemKey == itemName then
             for _, warehouse in pairs(itemLocs.warehouses) do
                 local whp = peripheral.wrap(warehouse.name)

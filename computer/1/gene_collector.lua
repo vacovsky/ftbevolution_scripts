@@ -12,6 +12,7 @@ function LoadIndexer()
 end
 
 while true do
-    LoadIndexer()
+    if not pcall(LoadIndexer) then print('LoadIndexer() failed to complete') end
+    -- LoadIndexer()
     sleep(120)
 end
