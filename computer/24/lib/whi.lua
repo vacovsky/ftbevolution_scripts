@@ -100,7 +100,7 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
 
     
     rednet.broadcast("index", PROTOCOL)
-    local _, itemLocationsIndex, _ = rednet.receive(1)
+    local _, itemLocationsIndex, _ = rednet.receive(3)
 
     -- SEARCH EACH WAREHOUSE FOR ITEM
     local pushedCount = 0
@@ -110,7 +110,7 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
             for _, warehouse in pairs(itemLocs.warehouses) do
                 local whp = peripheral.wrap(warehouse.name)
                 for _, slot in pairs(warehouse.slots) do
-                    pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+                    pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - pushedCount, toSlot)
                     if pushedCount >= itemCount then goto found end
                 end
             end
@@ -119,7 +119,7 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
                 for _, warehouse in pairs(itemLocs.warehouses) do
                     local whp = peripheral.wrap(warehouse.name)
                     for _, slot in pairs(warehouse.slots) do
-                        pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
+                        pushedCount = pushedCount + whp.pushItems(destination, slot, itemCount - pushedCount, toSlot)
                         if pushedCount >= itemCount then goto found end
                     end
                 end

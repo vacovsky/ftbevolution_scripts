@@ -37,10 +37,10 @@ end
 
 print('Starting Turtle Power (HIAHS)')
 while true do
-    if not pcall(FillGeneratorsFromHoneyStorage) then print('FillGeneratorsFromHoneyStorage() failed to complete') end
+    -- if not pcall(FillGeneratorsFromHoneyStorage) then print('FillGeneratorsFromHoneyStorage() failed to complete') end
 
     -- pcall(FillGeneratorsFromHoneyStorage)
-    -- FillGeneratorsFromHoneyStorage()
+    FillGeneratorsFromHoneyStorage()
 
     if not pcall(HoneyBottleCubifier) then print('HoneyBottleCubifier() failed to complete') end
 

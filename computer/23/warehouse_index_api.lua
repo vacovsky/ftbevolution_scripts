@@ -22,13 +22,12 @@ print("Populating index complete. Now serving!")
 
 while true do
     local sender, message = rednet.receive(PROTOCOL)
-    if message == "index" then
-        rednet.send(sender, INDEX, PROTOCOL)
-        print("Served", sender, PROTOCOL)
-    end
+    rednet.send(sender, INDEX, PROTOCOL)
+    print("Served", sender, PROTOCOL)
 
-    if os.epoch('utc') - LAST_INDEX_UPDATE > 10 then
-        pcall(PopulateIndex)
+    if os.epoch('utc') - LAST_INDEX_UPDATE > 30 then
+    if not pcall(PopulateIndex) then print('PopulateIndex() failed to complete') end
+    -- pcall(PopulateIndex)
         print("Index refreshed...")
     end
 end
