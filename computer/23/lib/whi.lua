@@ -1,4 +1,4 @@
-local warehouse_interface = { _version = '0.0.9' }
+local warehouse_interface = { _version = '0.0.10' }
 
 local net = require "lib/network"
 
@@ -22,45 +22,30 @@ function warehouse_interface.InventoryUsedPercentage()
 end
 
 function warehouse_interface.ItemLocationMap()
-    local itemCountMap = {}
-
-    -- COLLECT WAREHOUSE NAMES
-    local peripherals = peripheral.getNames()
-    table.sort(peripherals)
-
+    local itemLocationIndex = {}
     local warehouses = {}
     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
     for _, warehouse in pairs(warehouses) do
         local whp = peripheral.wrap(warehouse)
-        for _, item in pairs(whp.list()) do
-            if itemCountMap[item.name] then
-                itemCountMap[item.name] = {
-                    name = item.name,
-                    count = itemCountMap[item.name].count + item.count,
-                    slots = itemCountMap[item.name].slots + 1
-                }
-            else
-                itemCountMap[item.name] = {
-                    name = item.name,
-                    count = 0 + item.count,
-                    slots = 1
+        for slot, item in pairs(whp.list()) do
+            if itemLocationIndex[item.name] == nil then
+                itemLocationIndex[item.name] = {
+                    name = item.name
                 }
             end
+            if itemLocationIndex[item.name][warehouse] == nil then
+                itemLocationIndex[item.name][warehouse] = {}
+            end
+            table.insert(itemLocationIndex[item.name][warehouse], slot)
         end
     end
-    return itemCountMap
+    return itemLocationIndex
 end
 
 function warehouse_interface.ItemCountMap()
     local itemCountMap = {}
-
-    -- COLLECT WAREHOUSE NAMES
-    local peripherals = peripheral.getNames()
-    table.sort(peripherals)
-
-    local warehouses = {}
-    warehouses = net.ListMultipleMatchingDevices(warehouses_list)
+    local warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
     for _, warehouse in pairs(warehouses) do
         local whp = peripheral.wrap(warehouse)
@@ -146,7 +131,6 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     ::found::
     return foundCount
 end
-
 
 function warehouse_interface.tprint(tbl, indent)
     if not indent then indent = 0 end

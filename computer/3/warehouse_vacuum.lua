@@ -26,10 +26,7 @@ function Vacuum()
                 local inv = peripheral.wrap(inventory)
                 for slot, item in pairs(inv.list()) do
                     print(slot, item.name)
-                    -- if not item.name == 'create:experience_nugget' then
-                        -- print('Moving', item.name, 'to warehouse')
-                        deposited = deposited + whi.DepositInAnyWarehouse(inventory, slot)
-                    -- end
+                    deposited = deposited + whi.DepositInAnyWarehouse(inventory, slot)
                 end
             end
         end
