@@ -1,5 +1,9 @@
 rednet.open("bottom")
-local PROTOCOL = "whi_index"
+-- rednet.open("back")
+
+local INDEX_PROTOCOL = "whi_index"
+local INDEX_SERVER = "INDEX"
+local WAREHOUSE_INDEX_ID = 23
 
 local warehouse_interface = { _version = '0.0.10' }
 
@@ -90,6 +94,24 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     return movedItemCount
 end
 
+function GetItemsLocationTable()
+    -- rednet.broadcast("index", PROTOCOL)
+    local indexer = rednet.lookup(INDEX_PROTOCOL, INDEX_SERVER)
+    rednet.send(indexer, "index", INDEX_PROTOCOL)
+
+    repeat
+        -- local sender, itemLocationsIndex = rednet.receive()
+        id, itemLocationsIndex = rednet.receive()
+    until id == indexer
+    
+    -- if sender == WAREHOUSE_INDEX_ID then
+    --     return itemLocationsIndex
+    -- else 
+    --     GetItemsLocationTable()
+    -- end
+    -- time.sleep(.5)
+    return itemLocationsIndex
+end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
@@ -99,12 +121,14 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
 
     
-    rednet.broadcast("index", PROTOCOL)
-    local sender, itemLocationsIndex, proto = rednet.receive(10)
+    -- rednet.broadcast("index", PROTOCOL)
+    -- local _, itemLocationsIndex, _ = rednet.receive(PROTOCOL, 3)
+    local itemLocationsIndex = GetItemsLocationTable()
+
 
     -- SEARCH EACH WAREHOUSE FOR ITEM
     local pushedCount = 0
-    print(sender, itemLocationsIndex, proto)
+
     for itemKey, itemLocs in pairs(itemLocationsIndex) do
         if not guess and itemKey == itemName then
             for _, warehouse in pairs(itemLocs.warehouses) do

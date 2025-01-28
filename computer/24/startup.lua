@@ -79,10 +79,3 @@ while true do
     if not pcall(EnchantItem, words[1]) then print('EnchantItem() failed to complete') end
     ::continue::
 end
-
-
--- while true do
---     if not pcall(EnchantItem, enchants.soulbound) then print('EnchantItem() failed to complete') end
---     -- EnchantItem(enchants.soulbound)
---     sleep(1)
--- end
