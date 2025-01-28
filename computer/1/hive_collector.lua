@@ -3,7 +3,7 @@ local vars = require "lib/constants"
 local whi = require "lib/whi"
 
 -- local combs_source = 'enderstorage:ender_chest_5'
-local combs_dest = 'enderstorage:ender_chest_1'
+local combs_dest = 'enderstorage:ender_chest_8'
 -- local combs_dest = 'sophisticatedstorage:chest_2'
 -- local combs_dest = 'pneumaticcraft:reinforced_chest_1'
 
@@ -12,7 +12,6 @@ function ListHives()
     local peripherals = peripheral.getNames()
     for _, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, vars.hives) then
-            -- print(attached_peripheral)
             list[#list + 1] = attached_peripheral
         end
     end
@@ -39,7 +38,7 @@ end
 
 print("Starting hive collector...")
 while true do
-    if not pcall(CollectFromHives) then print('CollectFromHives() failed to complete') end
-    -- pcall(CollectFromHives)
+    -- if not pcall(CollectFromHives) then print('CollectFromHives() failed to complete') end
+    CollectFromHives()
     sleep(.1)
 end
