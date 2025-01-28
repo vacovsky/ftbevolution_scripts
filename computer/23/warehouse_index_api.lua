@@ -22,8 +22,8 @@ LAST_INDEX_UPDATE = os.epoch('utc')
 print("Populating index complete. Now serving!")
 
 while true do
-    local sender, message = rednet.receive(PROTOCOL)
-    rednet.send(sender, INDEX, PROTOCOL)
+    local sender, message = rednet.receive()
+    rednet.send(sender, INDEX)
     print("Served", sender, PROTOCOL)
 
     if os.epoch('utc') - LAST_INDEX_UPDATE > 30 then

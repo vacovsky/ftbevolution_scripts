@@ -96,7 +96,7 @@ end
 
 function GetItemsLocationTable()
     local indexer = rednet.lookup(INDEX_PROTOCOL, INDEX_SERVER)
-    rednet.send(indexer, "index", INDEX_PROTOCOL)
+    rednet.send(indexer, "index")
     repeat
         id, itemLocationsIndex = rednet.receive()
         print(id, indexer, itemLocationsIndex)
