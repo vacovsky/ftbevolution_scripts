@@ -12,7 +12,7 @@ function ListHives()
     local peripherals = peripheral.getNames()
     for _, attached_peripheral in pairs(peripherals) do
         if string.find(attached_peripheral, vars.hives) then
-            print(attached_peripheral)
+            -- print(attached_peripheral)
             list[#list + 1] = attached_peripheral
         end
     end
@@ -27,7 +27,7 @@ function CollectFromHives()
         for slot, item in pairs(phive.list()) do
             if not string.find(item.name, 'minecraft:') and
                 string.find(item.name, 'comb') and not string.find(item.name, 'sugarbag') then
-                pcombdest.pullItems(hive, slot)
+                combsMoved = combsMoved + pcombdest.pullItems(hive, slot)
             else
                 whi.DepositInAnyWarehouse(hive, slot)
             end

@@ -1,5 +1,9 @@
 rednet.open("bottom")
-local PROTOCOL = "whi_index"
+-- rednet.open("back")
+
+local INDEX_PROTOCOL = "whi_index"
+local INDEX_SERVER = "INDEX"
+local WAREHOUSE_INDEX_ID = 23
 
 local warehouse_interface = { _version = '0.0.10' }
 
@@ -90,19 +94,20 @@ function warehouse_interface.DepositInAnyWarehouse(sourceStorage, sourceSlot)
     return movedItemCount
 end
 
+function GetItemsLocationTable()
+    local indexer = rednet.lookup(INDEX_PROTOCOL, INDEX_SERVER)
+    rednet.send(indexer, "index", INDEX_PROTOCOL)
+    repeat
+        id, itemLocationsIndex = rednet.receive()
+        print(id, indexer, itemLocationsIndex)
+    until id == indexer
+    return itemLocationsIndex
+end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
-    -- COLLECT WAREHOUSE NAMES
-    local peripherals = peripheral.getNames()
-    table.sort(peripherals)
     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
-
-    
-    rednet.broadcast("index", PROTOCOL)
-    local _, itemLocationsIndex, _ = rednet.receive(3)
-
-    -- SEARCH EACH WAREHOUSE FOR ITEM
+    local itemLocationsIndex = GetItemsLocationTable()
     local pushedCount = 0
 
     for itemKey, itemLocs in pairs(itemLocationsIndex) do
@@ -130,55 +135,6 @@ function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, i
     ::found::
     return pushedCount
 end
-
--- function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
---     if not itemCount then itemCount = 64 end
---     -- COLLECT WAREHOUSE NAMES
---     local peripherals = peripheral.getNames()
---     table.sort(peripherals)
---     warehouses = net.ListMultipleMatchingDevices(warehouses_list)
-
---     -- SEARCH EACH WAREHOUSE FOR ITEM
---     local foundCount = 0
---     for whi, warehouse in pairs(warehouses) do
---         local whp = peripheral.wrap(warehouse)
---         for slot, item in pairs(whp.list()) do
---             -- must be exact name match
---             if not guess then
---                 if item.name == itemName then
---                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
---                     if pushedCount ~= nil then
---                         foundCount = foundCount + pushedCount
---                     end                    
---                     if foundCount >= itemCount then
---                         -- print('Order successfully filled!')
---                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
---                         print('OK', itemCount, itemName)
---                         goto found
---                     end
---                 end
---             else
---                 if string.find(item.name, itemName) then
---                     local pushedCount = whp.pushItems(destination, slot, itemCount - foundCount, toSlot)
---                     if pushedCount ~= nil then
---                         foundCount = foundCount + pushedCount
---                     end
---                     if foundCount >= itemCount then
---                         -- print('Order successfully filled!')
---                         -- EXIT WHEN WE HAVE DELIVERED ENOUGH
---                         print('OK', itemCount, itemName)
---                         goto found
---                     end
---                 end
---             end
---             -- TODO fuzzy match here
---             -- end fuzzy
---         end
---         if itemCount < foundCount then print('Only located', foundCount, 'of', itemCount) end
---     end
---     ::found::
---     return foundCount
--- end
 
 function warehouse_interface.tprint(tbl, indent)
     if not indent then indent = 0 end
