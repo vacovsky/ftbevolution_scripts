@@ -107,9 +107,7 @@ end
 
 function warehouse_interface.GetFromAnyWarehouse(guess, itemName, destination, itemCount, toSlot)
     if not itemCount then itemCount = 64 end
-
     if os.epoch('utc') - LAST_INDEX_TIME > INDEX_REFRESH_DELAY then
-        -- LAST_INDEX = GetItemsLocationTable()
         LAST_INDEX = warehouse_interface.ItemLocationMap()
         LAST_INDEX_TIME = os.epoch('utc')
     end

@@ -11,7 +11,7 @@ function LoadFugesWithCombs()
         local pfuge = peripheral.wrap(fuge)
         local pcombsrc = peripheral.wrap(combs_source)
         for slot, item in pairs(pcombsrc.list()) do
-            if string.find(item.name, 'productivebees:configurable_honeycomb') or string.find(item.name, 'productivebees:comb_') then
+            if not string.find(item.name, 'productivebees:configurable_comb') then
                 combsMoved = combsMoved + pfuge.pullItems(combs_source, slot)
             end
         end

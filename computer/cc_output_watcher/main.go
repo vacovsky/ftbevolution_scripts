@@ -15,6 +15,7 @@ var WATCHED_FILES = []string{
 	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/28/heartbeat.json`,
 }
 
+
 func main() {
 
 	watcher, err := fsnotify.NewWatcher()
@@ -56,4 +57,12 @@ func main() {
 		log.Fatal("Add failed:", err)
 	}
 	<-done
+}
+
+
+func loadMonitoredFilePaths() []string {
+	var files = []string{}
+	input, _ = ioutil.ReadFile(`input.json`)
+	locations := json.loads(input, &files)
+	fmt.Println(locations)
 }
