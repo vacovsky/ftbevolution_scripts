@@ -26,7 +26,6 @@ func main() {
 	done := make(chan bool)
 	go func() {
 		defer close(done)
-
 		for {
 			select {
 			case event, ok := <-watcher.Events:
@@ -47,16 +46,14 @@ func main() {
 				log.Println("error:", err)
 			}
 		}
-
 	}()
 
 	for _, file := range WATCHED_FILES {
-
 		err = watcher.Add(file)
 	}
+
 	if err != nil {
 		log.Fatal("Add failed:", err)
 	}
 	<-done
-
 }
