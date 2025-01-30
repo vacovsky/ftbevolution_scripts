@@ -51,5 +51,5 @@ while true do
     ImbueGemsToEssences()
     -- if not pcall(ImbueShardsToGems) then print('ImbueShardsToGems() failed to complete') end
     -- if not pcall(ImbueGemsToEssences) then print('ImbueGemsToEssences() failed to complete') end
-    sleep(120)
+    sleep(30)
 end

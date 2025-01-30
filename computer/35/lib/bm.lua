@@ -10,8 +10,7 @@ function move_to_return(bufferName)
     local return_storages = constants.return_storages
     local buffer = peripheral.wrap(bufferName)
     ::retry::
-    print("emptying", bufferName)
-    for _, return_storage in return_storages do
+    for _, return_storage in pairs(return_storages) do
         for slot, item in pairs(buffer.list()) do
             local transferred = buffer.pushItems(return_storage, slot)
             if transferred == 0 then goto continue end
@@ -22,7 +21,6 @@ function move_to_return(bufferName)
         sleep(5)
         goto retry
     end
-    print("emptied", bufferName)
 end
 
 function update_buffer(bufferName, status)
@@ -33,7 +31,7 @@ end
 
 function bm.init()
     local initial_state = {}
-    for _, buffer_name in pairs(constants.storage_buffers) do
+    for buffer_name, _ in pairs(constants.storage_buffers) do
         move_to_return(buffer_name)
         initial_state[buffer_name] = "unlocked"
     end
@@ -56,3 +54,4 @@ function bm.release(bufferName)
 end
 
 return bm
+

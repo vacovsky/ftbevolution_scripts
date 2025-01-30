@@ -44,15 +44,18 @@ function AttendFurnaces()
             print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
             -- move item for smelting to furnace
             moved = moved + whi.GetFromAnyWarehouse(true, raw_item, furnace, 64, 1)
-            if moved >= 32 then
-                goto next_item
-            end
+            -- if moved >= 32 then
+            --     goto next_item
+            -- end
         end
-        ::next_item::
+        print(moved, raw_item)
+        -- ::next_item::
     end
 end
 
 function FuelGenerators()
+    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
     print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
     print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
     print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
@@ -68,5 +71,5 @@ while true do
 
     -- pcall(FuelGenerators)
     -- pcall(AttendFurnaces())
-    sleep(15)
+    sleep(0.1)
 end
