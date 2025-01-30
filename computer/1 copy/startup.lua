@@ -1,7 +1,3 @@
-local_modem = "bottom"
-rednet.open(local_modem)
-rednet.host("storage_client", ("%s"):format(os.getComputerID()))
-
 shell.openTab("hive_collector")
 shell.openTab("honey_depositer")
 shell.openTab("processed_comb_storing")

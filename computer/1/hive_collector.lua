@@ -1,6 +1,7 @@
 local json = require "lib/json"
 local vars = require "lib/constants"
 local whi = require "lib/whi"
+local sc = require "lib/sc"
 
 -- local combs_source = 'enderstorage:ender_chest_5'
 local combs_dest = 'enderstorage:ender_chest_8'
@@ -28,7 +29,7 @@ function CollectFromHives()
                 string.find(item.name, 'comb') and not string.find(item.name, 'sugarbag') then
                 combsMoved = combsMoved + pcombdest.pullItems(hive, slot)
             else
-                combsMoved = combsMoved + whi.DepositInAnyWarehouse(hive, slot)
+                combsMoved = combsMoved + sc.push(hive, slot)
             end
         end
     end

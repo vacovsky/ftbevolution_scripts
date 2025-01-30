@@ -1,6 +1,6 @@
 local whi = require 'lib/whi'
 local net = require 'lib/network'
-
+local sc = require "lib/sc"
 
 
 local minraw_before_smelt = 256
@@ -39,9 +39,11 @@ function AttendFurnaces()
         for _, furnace in pairs(net.ListMatchingDevices(furnaces)) do
             -- Refuel furnaces
             -- print(whi.GetFromAnyWarehouse(false, coalfuel, furnace, 64, 2), 'fueled (coal)')
-            print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')
+            --print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')
+            sc.pull(waxfuel, 64, true, furnace, 2)
             -- move smelted items to warehouse
-            print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
+            --print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
+            sc.push(furnace, 3)
             -- move item for smelting to furnace
             moved = moved + whi.GetFromAnyWarehouse(true, raw_item, furnace, 64, 1)
             -- if moved >= 32 then
