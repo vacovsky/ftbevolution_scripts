@@ -46,7 +46,7 @@ while true do
         end
         ::nextstorage::
     end
-    sleep(1)
+    sleep(.1)
 end
 
 print("debug sleep")

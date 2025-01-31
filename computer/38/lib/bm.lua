@@ -7,7 +7,10 @@ local buffer_state_fn = "buffer_state"
 local bm = { _version = '0.0.1' }
 
 function move_to_return(bufferName)
-    local return_storages = constants.return_storages
+    local return_storages = constants.buffer_returns
+    for _, return_storage in pairs(constants.return_storages) do
+        table.insert(return_storages, return_storage)
+    end
     local buffer = peripheral.wrap(bufferName)
     ::retry::
     for _, return_storage in pairs(return_storages) do

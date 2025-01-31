@@ -5,7 +5,9 @@ constants.return_storages = {
     "sophisticatedstorage:barrel_42",
     "sophisticatedstorage:barrel_43",
     "sophisticatedstorage:barrel_44",
-    "sophisticatedstorage:barrel_45",
+}
+constants.buffer_returns = {
+    "sophisticatedstorage:barrel_45"
 }
 constants.storage_buffers = {
     ["sophisticatedstorage:barrel_18"]="sophisticatedstorage:barrel_13",
