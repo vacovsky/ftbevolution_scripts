@@ -5,33 +5,36 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"time"
 
 	"github.com/fsnotify/fsnotify"
 )
 
 func main() {
-
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		log.Fatal("NewWatcher failed: ", err)
 	}
 	defer watcher.Close()
-
 	done := make(chan bool)
 	go func() {
 		defer close(done)
-
 		for {
 			select {
 			case event, ok := <-watcher.Events:
 				if !ok {
 					return
 				}
-				// file change detected
-				log.Printf("%s %s\n", event.Name, event.Op)
-				// read in file to JSON
-				if event.Op == fsnotify.Write {
+				if event.Name == "inputs.json" && event.Op&fsnotify.Write == fsnotify.Write {
+					// inputs.json was modified, reload the watched files
+					log.Println("inputs.json changed, reloading config...")
+					for _, file := range loadWatchedFilesConfig() {
+						err = watcher.Add(file)
+						if err == nil {
+							log.Println("Added/Updated watch for:", file)
+						}
+					}
+				} else if event.Op&fsnotify.Write == fsnotify.Write {
+					// handle other file changes
 					ingestMonitorDataToRedis(event.Name)
 				}
 			case err, ok := <-watcher.Errors:
@@ -42,23 +45,17 @@ func main() {
 			}
 		}
 	}()
-
-	// for _, file := range loadMonitoredFilePaths() {
-	// 	err = watcher.Add(file)
-	// }
-
-	go func() {
-		for _, file := range loadWatchedFilesConfig() {
-			err = watcher.Add(file)
-			if err == nil {
-				log.Println("Added new watched file:", file)
-			}
+	// Add inputs.json to watcher
+	err = watcher.Add("inputs.json")
+	if err == nil {
+		log.Println("Watching inputs.json for changes")
+	}
+	// Add initial files from config
+	for _, file := range loadWatchedFilesConfig() {
+		err = watcher.Add(file)
+		if err == nil {
+			log.Println("Added initial watch for:", file)
 		}
-		time.Sleep(time.Second * 30)
-	}()
-
-	if err != nil {
-		log.Fatal("Add failed:", err)
 	}
 	<-done
 }
