@@ -2,6 +2,9 @@
 -- storage_client
 
 local sc = { _version = '0.0.1' }
+
+local tsdb = require 'lib/tsdb'
+
 local client_proto = "storage_client"
 local contro_proto = "storage_controller"
 local timeout = 10
@@ -35,6 +38,7 @@ end
 local return_storages = get_return_storages()
 
 function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
+    local req_start = os.epoch('utc')
     -- from buffer
     local itemName = itemName
     local quantity = tonumber(quantity)
@@ -67,11 +71,13 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
             tot_transferred = tot_transferred + transferred
         end
     end
+    logRequestTime("sc.pull", os.epoch('utc') - req_start)
     return tot_transferred
     --print("total items transferred:",total_transferred)
 end
 
 function sc.push(srcStorageName, srcSlot)
+    -- start timer
     -- to return
     local srcStorageName = srcStorageName
     local srcSlot = srcSlot
@@ -106,5 +112,12 @@ function sc.push_all(srcStorageName)
         if next(src_storage.list()) == nil then return tot_transferred end
     end
 end
-    
+
+function logRequestTime(method, time)
+    local data = {
+        [method] = time,
+    }
+    tsdb.WriteOutput("FTBEvolution", "storage_controller:"..tostring(os.getComputerID()), data, "storage.json")
+end
+
 return sc

@@ -16,7 +16,7 @@ local net = require "lib/net"
 local constants = require "lib/constants"
 
 
-local buffer_timeout = 2
+local buffer_timeout = 3
 local buffer_names = {}
 
 local p1_storages = net.get_storages(constants.p1_storage_strings, true, true, modem_name)

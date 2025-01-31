@@ -35,12 +35,14 @@ while true do
             for _, p1_storage in pairs(p1_storages) do
                 local transferred = i_storage.pushItems(p1_storage, slot)
                 item_count = item_count - transferred
-                if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
+                if item_count <=0 then goto nextitem end
+                --if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
             end
             for _, p2_storage in pairs(p2_storages) do
                 local transferred = i_storage.pushItems(p2_storage, slot)
                 item_count = item_count - transferred
-                if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
+                if item_count <=0 then goto nextitem end
+                --if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
             end
             ::nextitem::
         end

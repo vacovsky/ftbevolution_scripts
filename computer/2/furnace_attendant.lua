@@ -40,12 +40,13 @@ function AttendFurnaces()
             -- Refuel furnaces
             -- print(whi.GetFromAnyWarehouse(false, coalfuel, furnace, 64, 2), 'fueled (coal)')
             --print(whi.GetFromAnyWarehouse(false, waxfuel, furnace, 64, 2), 'fueled (wax)')
-            sc.pull(waxfuel, 64, true, furnace, 2)
+            sc.pull(waxfuel, 8, true, furnace, 2)
             -- move smelted items to warehouse
             --print(whi.DepositInAnyWarehouse(furnace, 3), 'deposited')
             sc.push(furnace, 3)
             -- move item for smelting to furnace
-            moved = moved + whi.GetFromAnyWarehouse(true, raw_item, furnace, 64, 1)
+            moved = moved + sc.pull(raw_item, 8, false, furnace, 1)
+            -- moved = moved + whi.GetFromAnyWarehouse(true, raw_item, furnace, 64, 1)
             -- if moved >= 32 then
             --     goto next_item
             -- end
@@ -56,20 +57,22 @@ function AttendFurnaces()
 end
 
 function FuelGenerators()
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
-    print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    -- sc.pull(raw_item, 8, true, furnace, 1)
+
+    print(sc.pull(waxfuel, 1024, true, generator_coalbox), 'gen: fueled (wax)')
+    -- print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    -- print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    -- print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
+    -- print(whi.GetFromAnyWarehouse(false, waxfuel, generator_coalbox, 1024, 2), 'gen: fueled (wax)')
     -- print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
     -- print(whi.GetFromAnyWarehouse(false, coalfuel, generator_coalbox, 64, 2), 'gen: fueled (coal)')
 end
 
 while true do
-    if not pcall(FuelGenerators) then print('FuelGenerators() failed to complete') end
-    -- FuelGenerators()
-    if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
-    -- AttendFurnaces()
+    -- if not pcall(FuelGenerators) then print('FuelGenerators() failed to complete') end
+    FuelGenerators()
+    -- if not pcall(AttendFurnaces) then print('AttendFurnaces() failed to complete') end
+    AttendFurnaces()
 
     -- pcall(FuelGenerators)
     -- pcall(AttendFurnaces())
