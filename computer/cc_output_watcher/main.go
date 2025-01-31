@@ -1,20 +1,14 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"log"
+	"time"
+
 	"github.com/fsnotify/fsnotify"
 )
-
-var WATCHED_FILES = []string{
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/warehouse.json`,
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/3/power.json`,
-
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/25/heartbeat.json`,
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/26/heartbeat.json`,
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/27/heartbeat.json`,
-	`/home/amp/.ampdata/instances/FTBEvolution01/Minecraft/world/computercraft/computer/28/heartbeat.json`,
-}
-
 
 func main() {
 
@@ -27,6 +21,7 @@ func main() {
 	done := make(chan bool)
 	go func() {
 		defer close(done)
+
 		for {
 			select {
 			case event, ok := <-watcher.Events:
@@ -36,7 +31,6 @@ func main() {
 				// file change detected
 				log.Printf("%s %s\n", event.Name, event.Op)
 				// read in file to JSON
-				// jsonFile, err := os.Open("users.json")
 				if event.Op == fsnotify.Write {
 					ingestMonitorDataToRedis(event.Name)
 				}
@@ -49,9 +43,19 @@ func main() {
 		}
 	}()
 
-	for _, file := range WATCHED_FILES {
-		err = watcher.Add(file)
-	}
+	// for _, file := range loadMonitoredFilePaths() {
+	// 	err = watcher.Add(file)
+	// }
+
+	go func() {
+		for _, file := range loadWatchedFilesConfig() {
+			err = watcher.Add(file)
+			if err == nil {
+				log.Println("Added new watched file:", file)
+			}
+		}
+		time.Sleep(time.Second * 30)
+	}()
 
 	if err != nil {
 		log.Fatal("Add failed:", err)
@@ -59,10 +63,20 @@ func main() {
 	<-done
 }
 
+func loadWatchedFilesConfig() []string {
+	files, err := ioutil.ReadFile("inputs.json")
+	if err != nil {
+		fmt.Println("Error reading file:", err)
+	}
 
-func loadMonitoredFilePaths() []string {
-	var files = []string{}
-	input, _ = ioutil.ReadFile(`input.json`)
-	locations := json.loads(input, &files)
-	fmt.Println(locations)
+	// Unmarshal the JSON data into a slice of strings
+	var filePaths []string
+	err = json.Unmarshal(files, &filePaths)
+	if err != nil {
+		fmt.Println("Error unmarshalling JSON:", err)
+	}
+	for _, path := range filePaths {
+		fmt.Println(path)
+	}
+	return filePaths
 }
