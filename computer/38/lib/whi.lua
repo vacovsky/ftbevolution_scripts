@@ -1,5 +1,3 @@
-rednet.open("bottom")
--- rednet.open("back")
 
 local LAST_INDEX_TIME = 0
 local INDEX_PROTOCOL = "whi_index"
