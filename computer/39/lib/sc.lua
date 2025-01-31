@@ -52,13 +52,15 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
     rednet.send(contro_id, request_string, contro_proto)
     sender_id, buffer_names, proto = rednet.receive(storage_client, timeout)
     if sender_id == nil then
-        print("timeout")
+        print("[sc.pull] timeout")
         return
     end
     if next(buffer_names) == nil then
-        print("no items or avail buffers")
+        print("[sc.pull] no items or avail buffers")
         return
     end
+    print("debug")
+    for k,v in pairs(buffer_names) do print(k,v) end
     local tot_transferred = 0
     for _, buffer_name in pairs(buffer_names) do
         local buffer = peripheral.wrap(buffer_name)

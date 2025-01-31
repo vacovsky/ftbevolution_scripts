@@ -3,8 +3,8 @@
   "peripheral.minecraft:furnace": 13,
   "peripheral.minecraft:chest": 122,
   "computer": 40,
-  "peripheral.sophisticatedstorage:chest": 102,
-  "peripheral.computer": 32,
+  "peripheral.sophisticatedstorage:chest": 103,
+  "peripheral.computer": 34,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
   "peripheral.productivebees:centrifuge": 348,
   "peripheral.enderio:stirling_generator": 0,
@@ -17,7 +17,7 @@
   "peripheral.functionalstorage:storage_controller": 3,
   "peripheral.functionalstorage:framed_1": 3,
   "peripheral.minecraft:barrel": 11,
-  "peripheral.enderstorage:ender_chest": 8,
+  "peripheral.enderstorage:ender_chest": 9,
   "peripheral.enderstorage:ender_tank": 2,
   "peripheral.productivebees:gene_indexer": 3,
   "peripheral.sophisticatedstorage:barrel": 45,
@@ -34,5 +34,7 @@
   "peripheral.productivebees:bottler": 0,
   "peripheral.ars_nouveau:enchanting_apparatus": 0,
   "peripheral.ars_nouveau:arcane_pedestal": 7,
-  "peripheral.minecraft:hopper": 0
+  "peripheral.minecraft:hopper": 0,
+  "disk": 0,
+  "peripheral.functionalstorage:controller_extension": 0
 }

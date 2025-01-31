@@ -8,8 +8,8 @@ local stb = { ["true"]=true, ["false"]=false }
 local strict = stb[args[4]]
 local modem_name = args[5]
 
---local max_quantity = 1728
-local max_quantity = 9999
+local max_quantity = 1728
+--local max_quantity = 9999
 if item_quantity > max_quantity then item_quantity = max_quantity end
 
 local bm = require "lib/bm"
@@ -65,7 +65,6 @@ for _, p1_storage in pairs(p1_storages) do
             item_quantity = item_quantity - transferred
             if transferred == 0 then
                 current_buffer = bm.allocate()
-                print("new current_buffer: ", current_buffer)
                 if current_buffer == nil then goto messageclient end
                 if current_buffer ~= nil then
                     table.insert(buffer_names, buffer)

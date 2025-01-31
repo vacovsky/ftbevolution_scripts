@@ -59,14 +59,15 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
         print("no items or avail buffers")
         return
     end
-    local total_transferred = 0
+    local tot_transferred = 0
     for _, buffer_name in pairs(buffer_names) do
         local buffer = peripheral.wrap(buffer_name)
         for slot, item in pairs(buffer.list()) do
             local transferred = buffer.pushItems(destStorageName, slot, quantity, destSlot)
-            total_transferred = total_transferred + transferred
+            tot_transferred = tot_transferred + transferred
         end
     end
+    return tot_transferred
     --print("total items transferred:",total_transferred)
 end
 
@@ -76,12 +77,15 @@ function sc.push(srcStorageName, srcSlot)
     local srcSlot = srcSlot
     --print("pushing slot to returns")
     local src_storage = peripheral.wrap(srcStorageName)
+    local tot_transferred = 0
     while true do
         for _, return_name in pairs(return_names) do
             local transferred = src_storage.pushItems(return_name, srcSlot)
+            tot_transferred = tot_transferred + transferred
         end
-        if src_storage.list()[srcSlot] == nil then return end
+        if src_storage.list()[srcSlot] == nil then return tot_transferred end
     end
+    return tot_transferred
 end
 
 function sc.push_all(srcStorageName)
@@ -89,15 +93,17 @@ function sc.push_all(srcStorageName)
     local srcStorageName = srcStorageName
     --print("pushing all slots to returns")
     local src_storage = peripheral.wrap(srcStorageName)
+    local tot_transferred = 0
     while true do
         for _, return_name in pairs(return_names) do
             for slot, item in pairs(src_storage.list()) do
                 local transferred = src_storage.pushItems(return_name, slot)
+                tot_transferred = tot_transferred + transferred
                 if transferred == 0 then goto continue end
             end
             ::continue::
         end
-        if next(src_storage.list()) == nil then return end
+        if next(src_storage.list()) == nil then return tot_transferred end
     end
 end
     

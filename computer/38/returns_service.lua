@@ -12,12 +12,12 @@ local inbound_storages = net.get_storages(constants.inbound_storages, true, fals
 
 
 print("debug")
-print("p1 storages")
-for _, s in pairs(p1_storages) do
-    print(s)
-end
 print("p2 storages")
 for _, s in pairs(p2_storages) do
+    print(s)
+end
+print("p1 storages")
+for _, s in pairs(p1_storages) do
     print(s)
 end
 print("inbound storages")
@@ -31,13 +31,16 @@ while true do
         local item_list = i_storage.list()
         if item_list == nil then goto nextstorage end
         for slot, item in pairs(item_list) do
+            local item_count = item["count"]
             for _, p1_storage in pairs(p1_storages) do
                 local transferred = i_storage.pushItems(p1_storage, slot)
-                if i_storage.list()[slot] == nil then goto nextitem end
+                item_count = item_count - transferred
+                if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
             end
             for _, p2_storage in pairs(p2_storages) do
                 local transferred = i_storage.pushItems(p2_storage, slot)
-                if i_storage.list()[slot] == nil then goto nextitem end
+                item_count = item_count - transferred
+                if i_storage.list()[slot] == nil or item_count <= 0 then goto nextitem end
             end
             ::nextitem::
         end
