@@ -1,7 +1,7 @@
 -- lib/sc.lua
 -- storage_client
 
-local sc = { _version = '0.0.1' }
+local sc = { _version = '0.0.3' }
 
 local tsdb = require 'lib/tsdb'
 
@@ -10,11 +10,11 @@ local contro_proto = "storage_controller"
 local timeout = 10
 
 function get_controller_id()
-    print("contro_id")
+    print("getting the contro_id")
     ::retry::
     controller_id = rednet.lookup(contro_proto)
     if controller_id == nil then
-        print("no controller id")
+        print("no contro_id")
         sleep(5)
         goto retry
     end
@@ -24,7 +24,7 @@ end
 local contro_id = get_controller_id()
 
 function get_return_storages()
-    print("return_storages")
+    print("getting return_storages")
     rednet.send(contro_id, "return", contro_proto)
     ::retry::
     sender_id, return_names, proto = rednet.receive(storage_client, timeout)
@@ -56,12 +56,12 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
     rednet.send(contro_id, request_string, contro_proto)
     sender_id, buffer_names, proto = rednet.receive(storage_client, timeout)
     if sender_id == nil then
-        print("timeout")
-        return
+        print("[sc.pull] timeout")
+        return 0
     end
     if next(buffer_names) == nil then
-        print("no items or avail buffers")
-        return
+        print("[sc.pull] no avail buffers")
+        return 0
     end
     local tot_transferred = 0
     for _, buffer_name in pairs(buffer_names) do
@@ -71,17 +71,17 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
             tot_transferred = tot_transferred + transferred
         end
     end
-    logRequestTime("sc.pull", os.epoch('utc') - req_start)
+    logRequestTime("sc.push", os.epoch('utc') - req_start)
     return tot_transferred
-    --print("total items transferred:",total_transferred)
 end
 
 function sc.push(srcStorageName, srcSlot)
     -- start timer
+    local req_start = os.epoch('utc')
+
     -- to return
     local srcStorageName = srcStorageName
     local srcSlot = srcSlot
-    --print("pushing slot to returns")
     local src_storage = peripheral.wrap(srcStorageName)
     local tot_transferred = 0
     while true do
@@ -89,15 +89,20 @@ function sc.push(srcStorageName, srcSlot)
             local transferred = src_storage.pushItems(return_name, srcSlot)
             tot_transferred = tot_transferred + transferred
         end
-        if src_storage.list()[srcSlot] == nil then return tot_transferred end
+        if src_storage.list()[srcSlot] == nil then 
+            logRequestTime("sc.pull", os.epoch('utc') - req_start)
+            return tot_transferred 
+        end
     end
+    logRequestTime("sc.pull", os.epoch('utc') - req_start)
     return tot_transferred
 end
 
 function sc.push_all(srcStorageName)
+    local req_start = os.epoch('utc')
+
     -- to return
     local srcStorageName = srcStorageName
-    --print("pushing all slots to returns")
     local src_storage = peripheral.wrap(srcStorageName)
     local tot_transferred = 0
     while true do
@@ -109,8 +114,12 @@ function sc.push_all(srcStorageName)
             end
             ::continue::
         end
-        if next(src_storage.list()) == nil then return tot_transferred end
+        if next(src_storage.list()) == nil then 
+            logRequestTime("sc.push_all", os.epoch('utc') - req_start)
+            return tot_transferred
+        end
     end
+    logRequestTime("sc.push_all", os.epoch('utc') - req_start)
 end
 
 function logRequestTime(method, time)

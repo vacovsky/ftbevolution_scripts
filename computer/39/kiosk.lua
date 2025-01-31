@@ -1,7 +1,8 @@
 -- kiosk.lua
 local sc = require "lib/sc"
+local constants = require "lib/kiosk_const"
 
-local kiosk_storage = "sophisticatedstorage:chest_103"
+local kiosk_storage = constants.kiosk_storage
 local idle_fn = "idle"
 
 function write_idle()

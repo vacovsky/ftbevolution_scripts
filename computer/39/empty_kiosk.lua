@@ -1,8 +1,9 @@
 -- empty_kiosk.lua
 local sc = require "lib/sc"
-local kiosk_storage = "sophisticatedstorage:chest_103"
+local constants = require "lib/kiosk_const"
+local kiosk_storage = constants.kiosk_storage
 local idle_fn = "idle"
-local idle_timer = 60
+local idle_timer = constants.idle_timer
 
 local loops = -1
 print("monitoring kiosk idleness")
