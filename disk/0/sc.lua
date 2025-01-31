@@ -56,7 +56,9 @@ function sc.pull(itemName, quantity, strict, destStorageName, destSlot)
         return 0
     end
     if next(buffer_names) == nil then
-        print("[sc.pull] no items or avail buffers")
+        print("[sc.pull] no avail buffers")
+        print("[sc.pull] sleeping to throttle")
+        sleep(10)
         return 0
     end
     local tot_transferred = 0

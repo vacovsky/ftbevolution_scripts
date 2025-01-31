@@ -14,11 +14,19 @@ while true do
     local api_arg_3 = parts(4)
     if api == "get" then
         print("client", id, "api", "get")
-        shell.openTab("get_api", id, api_arg_1, api_arg_2, api_arg_3, internal_modem_name)
+        
+        local currentTabId = multishell.getFocus()
+        local newTabId = shell.openTab("get_api", id, api_arg_1, api_arg_2, api_arg_3, internal_modem_name)
+        multishell.setFocus(newTabId)
+        multishell.setFocus(currentTabId)
     end
     if api == "return" then
         print("client", id, "api", "return")
-        shell.openTab("return_api", id)
+
+        local currentTabId = multishell.getFocus()
+        local newTabId = shell.openTab("return_api", id)
+        multishell.setFocus(newTabId)
+        multishell.setFocus(currentTabId)
     end
     
     -- reset variables
