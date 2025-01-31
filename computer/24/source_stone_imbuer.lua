@@ -51,9 +51,9 @@ end
 
 print('Imbuement starting...')
 while true do
-    ImbueShardsToGems()
-    ImbueGemsToEssences()
-    -- if not pcall(ImbueShardsToGems) then print('ImbueShardsToGems() failed to complete') end
-    -- if not pcall(ImbueGemsToEssences) then print('ImbueGemsToEssences() failed to complete') end
-    sleep(30)
+    -- ImbueShardsToGems()
+    -- ImbueGemsToEssences()
+    if not pcall(ImbueShardsToGems) then print('ImbueShardsToGems() failed to complete') end
+    if not pcall(ImbueGemsToEssences) then print('ImbueGemsToEssences() failed to complete') end
+    sleep(1)
 end

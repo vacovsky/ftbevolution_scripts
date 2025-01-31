@@ -48,7 +48,7 @@ function LoadPedestalsWithMaterials(recipe)
     for _, mat in pairs(recipe) do
         local moved = 0
         for _, ped in pairs(peds) do
-            moved = sc.pull(mat, 1, true, ped, nil)
+            moved = sc.pull(mat, 1, true, ped)
             if moved > 0 then goto next end
         end
         ::next::

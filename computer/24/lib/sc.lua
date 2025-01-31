@@ -1,7 +1,7 @@
 -- lib/sc.lua
 -- storage_client
 
-local sc = { _version = '0.0.2' }
+local sc = { _version = '0.0.3' }
 
 local tsdb = require 'lib/tsdb'
 
@@ -77,6 +77,8 @@ end
 
 function sc.push(srcStorageName, srcSlot)
     -- start timer
+    local req_start = os.epoch('utc')
+
     -- to return
     local srcStorageName = srcStorageName
     local srcSlot = srcSlot
@@ -87,12 +89,18 @@ function sc.push(srcStorageName, srcSlot)
             local transferred = src_storage.pushItems(return_name, srcSlot)
             tot_transferred = tot_transferred + transferred
         end
-        if src_storage.list()[srcSlot] == nil then return tot_transferred end
+        if src_storage.list()[srcSlot] == nil then 
+            logRequestTime("sc.pull", os.epoch('utc') - req_start)
+            return tot_transferred 
+        end
     end
+    logRequestTime("sc.push", os.epoch('utc') - req_start)
     return tot_transferred
 end
 
 function sc.push_all(srcStorageName)
+    local req_start = os.epoch('utc')
+
     -- to return
     local srcStorageName = srcStorageName
     local src_storage = peripheral.wrap(srcStorageName)
@@ -106,8 +114,12 @@ function sc.push_all(srcStorageName)
             end
             ::continue::
         end
-        if next(src_storage.list()) == nil then return tot_transferred end
+        if next(src_storage.list()) == nil then 
+            logRequestTime("sc.push_all", os.epoch('utc') - req_start)
+            return tot_transferred
+        end
     end
+    logRequestTime("sc.push_all", os.epoch('utc') - req_start)
 end
 
 function logRequestTime(method, time)
