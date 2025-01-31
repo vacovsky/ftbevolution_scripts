@@ -2,11 +2,12 @@
 -- storage_controller
 local args = {...}
 local client_id = tonumber(args[1])
-local item_name = args[2]
-local item_quantity = tonumber(args[3])
+local client_protocol = args[2]
+local item_name = args[3]
+local item_quantity = tonumber(args[4])
 local stb = { ["true"]=true, ["false"]=false }
-local strict = stb[args[4]]
-local modem_name = args[5]
+local strict = stb[args[5]]
+local modem_name = args[6]
 
 local max_quantity = 1728
 if item_quantity > max_quantity then item_quantity = max_quantity end
@@ -62,7 +63,7 @@ for _, p1_storage in pairs(p1_storages) do
 end
 
 ::messageclient::
-rednet.send(client_id, buffer_names, "storage_client")
+rednet.send(client_id, buffer_names, client_protocol)
 
 -- give client 'buffer_timeout' seconds to get their stuff
 sleep(buffer_timeout)

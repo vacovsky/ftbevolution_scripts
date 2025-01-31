@@ -9,14 +9,15 @@ while true do
     print(id, message)
     parts = string.gmatch(message, "%S+")
     local api = parts(1)
-    local api_arg_1 = parts(2)
-    local api_arg_2 = parts(3)
-    local api_arg_3 = parts(4)
+    local api_client = parts(2)
+    local api_arg_1 = parts(3)
+    local api_arg_2 = parts(4)
+    local api_arg_3 = parts(5)
     if api == "get" then
         print("client", id, "api", "get")
         
         local currentTabId = multishell.getFocus()
-        local newTabId = shell.openTab("get_api", id, api_arg_1, api_arg_2, api_arg_3, internal_modem_name)
+        local newTabId = shell.openTab("get_api", id, api_client, api_arg_1, api_arg_2, api_arg_3, internal_modem_name)
         multishell.setFocus(newTabId)
         multishell.setFocus(currentTabId)
     end
@@ -24,7 +25,7 @@ while true do
         print("client", id, "api", "return")
 
         local currentTabId = multishell.getFocus()
-        local newTabId = shell.openTab("return_api", id)
+        local newTabId = shell.openTab("return_api", id, api_client)
         multishell.setFocus(newTabId)
         multishell.setFocus(currentTabId)
     end
