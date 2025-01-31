@@ -8,7 +8,6 @@ local stb = { ["true"]=true, ["false"]=false }
 local strict = stb[args[4]]
 local modem_name = args[5]
 
---local max_quantity = 1728
 local max_quantity = 9999
 if item_quantity > max_quantity then item_quantity = max_quantity end
 
@@ -16,17 +15,12 @@ local bm = require "lib/bm"
 local net = require "lib/net"
 local constants = require "lib/constants"
 
+
 local buffer_timeout = 5
 local buffer_names = {}
 
 local p1_storages = net.get_storages(constants.p1_storage_strings, true, true, modem_name)
 local p2_storages = net.get_storages(constants.p2_storage_strings, true, true, modem_name)
-
-
-local current_buffer = bm.allocate()
-print("current_buffer", current_buffer)
-if current_buffer == nil then goto messageclient end
-if current_buffer ~= nil then table.insert(buffer_names, current_buffer) end
 
 function match_item(itemName, matchString, strict)
     if strict == false then
@@ -37,21 +31,20 @@ function match_item(itemName, matchString, strict)
     end
 end
 
+::newcurrentbuffer::
+if item_quantity == 0 then goto messageclient end
+current_buffer = bm.allocate()
+print("current_buffer", current_buffer)
+if current_buffer == nil then goto messageclient end
+if current_buffer ~= nil then table.insert(buffer_names, current_buffer) end
+w_current_buffer = peripheral.wrap(current_buffer)
+
 for _, p2_storage in pairs(p2_storages) do
     for slot, item in pairs(p2_storage.list()) do
         if match_item(item["name"], item_name, strict) then
-            ::p2retry::
             local transferred = p2_storage.pushItems(constants.storage_buffers[current_buffer], slot, item_quantity)
             item_quantity = item_quantity - transferred
-            if transferred == 0 then
-                current_buffer = bm.allocate()
-                print("new current_buffer: ", current_buffer)
-                if current_buffer == nil then goto messageclient end
-                if current_buffer ~= nil then
-                    table.insert(buffer_names, current_buffer)
-                    goto p2retry
-                end
-            end
+            if #w_current_buffer.list() == w_current_buffer.size() then goto newcurrentbuffer end
         end
         if item_quantity == 0 then goto messageclient end
     end
@@ -60,18 +53,9 @@ end
 for _, p1_storage in pairs(p1_storages) do
     for slot, item in pairs(p1_storage.list()) do
         if match_item(item["name"], item_name, strict) then
-            ::p1retry::
             local transferred = p1_storage.pushItems(constants.storage_buffers[current_buffer], slot, item_quantity)
             item_quantity = item_quantity - transferred
-            if transferred == 0 then
-                current_buffer = bm.allocate()
-                print("new current_buffer: ", current_buffer)
-                if current_buffer == nil then goto messageclient end
-                if current_buffer ~= nil then
-                    table.insert(buffer_names, buffer)
-                    goto p1retry
-                end
-            end
+            if #w_current_buffer.list() == w_current_buffer.size() then goto newcurrentbuffer end
         end
         if item_quantity == 0 then goto messageclient end
     end
