@@ -1,5 +1,5 @@
 -- turn on rednet
-local local_modem = "bottom"
+local local_modem = "top"
 rednet.open(local_modem)
 rednet.host("storage_client", ("%s"):format(os.getComputerID()))
 
