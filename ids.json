@@ -4,7 +4,7 @@
   "peripheral.minecraft:chest": 122,
   "computer": 40,
   "peripheral.sophisticatedstorage:chest": 103,
-  "peripheral.computer": 34,
+  "peripheral.computer": 35,
   "peripheral.pneumaticcraft:reinforced_chest": 6,
   "peripheral.productivebees:centrifuge": 348,
   "peripheral.enderio:stirling_generator": 0,
@@ -35,6 +35,7 @@
   "peripheral.ars_nouveau:enchanting_apparatus": 0,
   "peripheral.ars_nouveau:arcane_pedestal": 7,
   "peripheral.minecraft:hopper": 0,
-  "disk": 0,
-  "peripheral.functionalstorage:controller_extension": 0
+  "disk": 1,
+  "peripheral.functionalstorage:controller_extension": 0,
+  "peripheral.drive": 0
 }

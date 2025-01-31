@@ -8,7 +8,7 @@ local stb = { ["true"]=true, ["false"]=false }
 local strict = stb[args[4]]
 local modem_name = args[5]
 
-local max_quantity = 9999
+local max_quantity = 1728
 if item_quantity > max_quantity then item_quantity = max_quantity end
 
 local bm = require "lib/bm"
@@ -16,7 +16,7 @@ local net = require "lib/net"
 local constants = require "lib/constants"
 
 
-local buffer_timeout = 5
+local buffer_timeout = 2
 local buffer_names = {}
 
 local p1_storages = net.get_storages(constants.p1_storage_strings, true, true, modem_name)

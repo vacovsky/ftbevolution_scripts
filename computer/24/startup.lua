@@ -1,9 +1,15 @@
+local local_modem = "bottom"
+rednet.open(local_modem)
+rednet.host("storage_client", ("%s"):format(os.getComputerID()))
+
+
 shell.openTab("source_stone_imbuer")
 
 local whi = require 'lib/whi'
 local tsdb = require 'lib/tsdb'
 local net = require 'lib/network'
 local enchants = require 'lib/ars_enchanter_recipes'
+local sc = require "lib/sc"
 
 local ITEM_INPUT = 'minecraft:barrel_5'
 local ITEM_OUTPUT = 'minecraft:barrel_6'
@@ -17,7 +23,7 @@ function UnloadAllPedestals()
     for _, ped in pairs(peds) do
         local p = peripheral.wrap(ped)
         for slot, item in pairs(p.list()) do 
-            whi.DepositInAnyWarehouse(ped, slot)
+            sc.push(ped, slot)
         end
     end
 end
@@ -42,7 +48,7 @@ function LoadPedestalsWithMaterials(recipe)
     for _, mat in pairs(recipe) do
         local moved = 0
         for _, ped in pairs(peds) do
-            moved = whi.GetFromAnyWarehouse(false, mat, ped, 1)
+            moved = sc.pull(mat, 1, true, ped, nil)
             if moved > 0 then goto next end
         end
         ::next::
