@@ -62,22 +62,23 @@ function WarehouseStats()
     end
 end
 
-function PowerStats()
-    local data = {
-        energy_capacity = 0,
-        energy_stored = 0
-    }
-    for _, batt in pairs(net.ListMatchingDevices(POWER_BANK)) do
-        local powerPeripheral = peripheral.wrap(batt)
-        data.energy_capacity = data.energy_capacity + powerPeripheral.getEnergyCapacity()
-        data.energy_stored = data.energy_stored + powerPeripheral.getEnergy()
-    end
-    tsdb.WriteOutput("FTBEvolution", "power", data, "power.json")
-end
+-- function PowerStats()
+--     local data = {
+--         energy_capacity = 0,
+--         energy_stored = 0
+--     }
+--     for _, batt in pairs(net.ListMatchingDevices(POWER_BANK)) do
+--         local powerPeripheral = peripheral.wrap(batt)
+--         data.energy_capacity = data.energy_capacity + powerPeripheral.getEnergyCapacity()
+--         data.energy_stored = data.energy_stored + powerPeripheral.getEnergy()
+--     end
+--     tsdb.WriteOutput("FTBEvolution", "power", data, "power.json")
+-- end
 
 
 print('Starting stats collection...')
 while true do
+    -- WarehouseStats()
     if not pcall(WarehouseStats) then print('WarehouseStats() failed to complete') end
     -- if not pcall(PowerStats) then print('PowerStats() failed to complete') end
     -- PowerStats()
