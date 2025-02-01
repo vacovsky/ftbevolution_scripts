@@ -10,6 +10,7 @@ local strict = stb[args[5]]
 local modem_name = args[6]
 
 local max_quantity = 1728
+--local max_quantity = 3456
 if item_quantity > max_quantity then item_quantity = max_quantity end
 
 local bm = require "lib/bm"
